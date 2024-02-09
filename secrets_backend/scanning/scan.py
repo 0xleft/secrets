@@ -2,15 +2,27 @@ from git import Repo
 import subprocess
 import os
 import storage
+from config import VERBOSE, GITLEAKS_BIN
 
-GITLEAKS_BIN = './bin/gitleaks'
+def is_safe(dir: str):
+    for char in dir:
+        if char not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.\\:/":
+            return False
+    return True
 
 def scan_gitleaks(repo: Repo, url: str):
-    subprocess.run([GITLEAKS_BIN, 'detect', '-s', repo.working_dir, '--exit-code', '0', '--no-banner', '--no-color', '--report-format', 'json', '--log-level', 'error', '--report-path', f'{repo.working_dir}_gitleaks.json', '--verbose'], stderr=subprocess.DEVNULL, check=True)
 
+    if not is_safe(repo.working_dir):
+        raise Exception(f"Invalid directory name {repo.working_dir}!")
 
-    with open(f'{repo.working_dir}_gitleaks.json', 'r') as f:
-        print(f.read())
-        storage.store(f.read(), url)
+    subprocess.run([GITLEAKS_BIN, "detect", "-s", repo.working_dir, "--exit-code", "0", "--no-banner", "--no-color", "--report-format", "json", "--log-level", "error", "--report-path", f"{repo.working_dir}_gitleaks.json"], stderr=subprocess.DEVNULL, check=True)
 
-    os.remove(f'{repo.working_dir}_gitleaks.json')
+    try:
+        with open(f"{repo.working_dir}_gitleaks.json", "r") as f:
+            storage.store(f.read(), url)
+    except Exception as e:
+        if VERBOSE:
+            print(e)
+
+    # this is because we want to delete the file even if it fails to store
+    os.remove(f"{repo.working_dir}_gitleaks.json")
