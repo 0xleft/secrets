@@ -9,7 +9,7 @@ import threading
 def delete_repo(path: str):
     rmtree(path)
 
-def scan_repo(url: str):
+def scan_repo(url: str, owner: str):
     should_exit = False
     repo_hash = hashlib.sha256(url.encode()).hexdigest()
 
@@ -23,7 +23,7 @@ def scan_repo(url: str):
             print(e)
         return
     try:
-        scan.scan_gitleaks(repo, url)
+        scan.scan_gitleaks(repo, url, owner)
     except Exception as e:
         if VERBOSE:
             print(e)
@@ -53,11 +53,11 @@ def get_latest_id() -> int:
         return int(f.read())
 
 thread_count = 0
-def thread_scan(url: str):
+def thread_scan(url: str, owner: str):
     global thread_count
     thread_count += 1
     try:
-        scan_repo(url)
+        scan_repo(url, owner)
     except Exception as e:
         if VERBOSE:
             print(e)
@@ -67,11 +67,11 @@ if __name__ == "__main__":
     while True:
         latest_id = get_latest_id()
         repos = get_repos(latest_id)
-        print(f"Scanning {len(repos)} repositories")
+        # print(f"Scanning {len(repos)} repositories")
         for repo in repos:
             while thread_count >= THREAD_COUNT:
                 pass
-            threading.Thread(target=thread_scan, args=(repo["html_url"], )).start()
+            threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
         save_latest_id(repos[-1]["id"])
 
         while thread_count > 0:
