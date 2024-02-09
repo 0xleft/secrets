@@ -6,7 +6,7 @@ mongo_client = pymongo.MongoClient(dotenv["MONGO_URI"])
 mongo_db = mongo_client["secrets"]
 
 class Secret():
-    def __init__(self, url, commit, path, secret, match, rule_id, owner):
+    def __init__(self, url, commit, path, secret, match, rule_id, owner, date):
         self.url = url
         self.commit = commit
         self.path = path # File
@@ -14,6 +14,7 @@ class Secret():
         self.match = match
         self.rule_id = rule_id
         self.owner = owner
+        self.date = date
 
     def save(self):
         return mongo_db["secrets"].insert_one({
@@ -23,14 +24,15 @@ class Secret():
             "secret": self.secret,
             "match": self.match,
             "rule_id": self.rule_id,
-            "owner": self.owner
+            "owner": self.owner,
+            "date": self.date
         })
     
 def store(json_data: str, url: str, owner: str):
     json_data = json.loads(json_data)
 
     for secret in json_data:
-        Secret(url, secret["Commit"], secret["File"], secret["Secret"], secret["Match"], secret["RuleID"], owner).save()
+        Secret(url, secret["Commit"], secret["File"], secret["Secret"], secret["Match"], secret["RuleID"], owner, secret["Date"]).save()
 
     if VERBOSE:
         print(f"Stored {len(json_data)} secrets from {url}")

@@ -3,7 +3,7 @@ import scan
 import hashlib
 import os
 import requests
-from config import VERBOSE, THREAD_COUNT, dotenv
+from config import VERBOSE, THREAD_COUNT, dotenv, SHOULD_SKIP_FORKS
 import threading
 
 def delete_repo(path: str):
@@ -69,6 +69,8 @@ if __name__ == "__main__":
         repos = get_repos(latest_id)
         # print(f"Scanning {len(repos)} repositories")
         for repo in repos:
+            if repo["fork"] and SHOULD_SKIP_FORKS:
+                continue
             while thread_count >= THREAD_COUNT:
                 pass
             threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
