@@ -40,7 +40,8 @@ def scan_repo(url: str):
 def get_repos(latest_id: int):
     response = requests.get(f"https://api.github.com/repositories?since={latest_id}", headers={
         "Authorization": f"Bearer {dotenv['GITHUB_TOKEN']}",
-        "Accept": "application/vnd.github+json"
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "https://pageup.lt/ @0xleft"
     })
 
     return response.json()
