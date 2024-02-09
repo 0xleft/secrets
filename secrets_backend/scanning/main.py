@@ -1,38 +1,36 @@
-from git import Repo
+from git import Repo, rmtree
 import scan
 import hashlib
 import os
 import requests
-from config import VERBOSE, THREAD_COUNT
-import dotenvit
+from config import VERBOSE, THREAD_COUNT, dotenv
 import threading
 
-dotenv = dotenvit.DotEnvIt()
+def delete_repo(path: str):
+    rmtree(path)
 
 def scan_repo(url: str):
     should_exit = False
+    repo_hash = hashlib.sha256(url.encode()).hexdigest()
+
     try:
-        repo_hash = hashlib.sha256(url.encode()).hexdigest()
-
-        repo = Repo.clone_from(url, repo_hash)
-        try:
-            scan.scan_gitleaks(repo, url)
-        except Exception as e:
-            if VERBOSE:
-                print(e)
-
-        repo.close()
+        repo = Repo.clone_from(url, f"tmp/{repo_hash}")
     except KeyboardInterrupt:
         should_exit = True
+    except Exception as e:
+        delete_repo(f"tmp/{repo_hash}")
+        if VERBOSE:
+            print(e)
+        return
+    try:
+        scan.scan_gitleaks(repo, url)
     except Exception as e:
         if VERBOSE:
             print(e)
 
-    if os.name == "nt":
-        os.system(f"rmdir /s /q {repo_hash}")
-    else:
-        os.system(f"rm -rf {repo_hash}")
-    
+    repo.close()
+    delete_repo(repo.working_dir)
+
     if should_exit:
         os.remove(f"{repo.working_dir}_gitleaks.json")
         exit(1)
@@ -55,7 +53,7 @@ def get_latest_id() -> int:
         return int(f.read())
 
 thread_count = 0
-def thread_scan(url: str, thread_index: int):
+def thread_scan(url: str):
     global thread_count
     thread_count += 1
     try:
@@ -73,7 +71,7 @@ if __name__ == "__main__":
         for repo in repos:
             while thread_count >= THREAD_COUNT:
                 pass
-            threading.Thread(target=thread_scan, args=(repo["html_url"], thread_count)).start()
+            threading.Thread(target=thread_scan, args=(repo["html_url"], )).start()
         save_latest_id(repos[-1]["id"])
 
         while thread_count > 0:

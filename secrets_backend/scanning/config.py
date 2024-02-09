@@ -1,5 +1,7 @@
 import os
+import dotenvit
 
-VERBOSE = True
+dotenv = dotenvit.DotEnvIt()
+VERBOSE = False
 GITLEAKS_BIN = './bin/gitleaks.exe' if os.name == 'nt' else './bin/gitleaks_linux'
 THREAD_COUNT = 4
