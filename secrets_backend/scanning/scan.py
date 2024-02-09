@@ -15,7 +15,7 @@ def scan_gitleaks(repo: Repo, url: str):
     if not is_safe(repo.working_dir):
         raise Exception(f"Invalid directory name {repo.working_dir}!")
 
-    subprocess.run([GITLEAKS_BIN, "detect", "-s", repo.working_dir, "--exit-code", "0", "--no-banner", "--no-color", "--report-format", "json", "--log-level", "error", "--report-path", f"{repo.working_dir}_gitleaks.json"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run([GITLEAKS_BIN, "detect", "-s", repo.working_dir, "--exit-code", "0", "--no-banner", "--no-color", "--report-format", "json", "--log-level", "error", "--report-path", f"{repo.working_dir}_gitleaks.json", "--max-target-megabytes", "1"], stderr=subprocess.DEVNULL, check=True)
 
     try:
         with open(f"{repo.working_dir}_gitleaks.json", "r") as f:
