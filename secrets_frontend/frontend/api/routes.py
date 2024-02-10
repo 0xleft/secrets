@@ -5,8 +5,8 @@ from ..common.config import dotenv
 client = pymongo.MongoClient(dotenv["MONGO_URI"])
 db = client["secrets"]
 
-admin = Blueprint('admin', __name__)
+api = Blueprint('api', __name__)
 
-@admin.route('/secrets/admin')
-def index():
+@api.route('/secrets/api/health', methods=['GET', 'POST'])
+def api_health():
     pass

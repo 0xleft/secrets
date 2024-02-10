@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Pageup Secrets API
+  description: |-
+    This is the API documentation for the Pageup Secrets API.
+  contact:
+    email: bobiknobig@duck.com
+  version: 1.0.11
+servers:
+  - url: https://pageup.lt/secrets/api
+    description: Production server
+tags:
+  - name: search
+    description: Search operations
+  - name: scan
+    description: Scan operations
+  - name: user
+    description: Operations about user
+paths:
+  

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title is-1">Login</h1>
+        <p class="subtitle">
+            Login to get access to api key and full functionality.
+        </p>
+
+        {% if error %}
+            <div class="notification is-danger">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form action="/secrets/login" method="post">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link">Login with Github <i class="fab fa-github"></i></button>
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+    </div>
+</section>
+
+{% endblock content %}

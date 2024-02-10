@@ -6,6 +6,7 @@
     <title>Secrets</title>
     <link rel="icon" href="/secrets/static/troll_face.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -33,12 +34,24 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                        {% if not session['logged_in'] %}
                         <a class="button is-info" href="/secrets/login">
                             <strong>Login</strong>
                         </a>
-                        <a class="button is-light" href="/secrets/register">
-                            Register
+                        {% else %}
+
+                        {% if session['is_admin'] %}
+                        <a class="button is-info" href="/secrets/admin">
+                            Admin
                         </a>
+                        {% endif %}
+                        <a class="button is-info" href="/secrets/user">
+                            Dashboard
+                        </a>
+                        <a class="button is-light" href="/secrets/logout">
+                            Logout
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -65,9 +78,9 @@
     <footer class="footer">
         <div class="content has-text-centered">
           <p>
-            <strong>Secrets</strong> by <a href="https://github.com/PageupOrg">PageupOrg</a>.
+            <strong>Secrets</strong> by <a href="https://github.com/">plusleft</a>.
             <br>
-            Meant for educational purposes only.
+            Meant for research and educational purposes only.
           </p>
         </div>
       </footer>

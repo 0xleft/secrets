@@ -1,3 +1,160 @@
 {% extends "layout.html" %}
 {% block content %}
+
+{% if not secrets %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title is-1">Search</h1>
+        <p class="subtitle">
+            Search for secrets in the database.
+        </p>
+
+        <form action="/secrets/search" method="post">
+            <div class="field">
+                <label class="label">URL</label>
+                <div class="control">
+                    <input class="input" type="text" name="url" placeholder="https://github.com/username/repository">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Commit</label>
+                <div class="control">
+                    <input class="input" type="text" name="commit" placeholder="fab4cfc793ec208162bbb33a2402c62d65a0e755">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Path</label>
+                <div class="control">
+                    <input class="input" type="text" name="path" placeholder="app/controllers/application.rb">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Secret</label>
+                <div class="control">
+                    <input class="input" type="text" name="secret" placeholder="password">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Match</label>
+                <div class="control">
+                    <input class="input" type="text" name="match" placeholder="secret => 'test">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Rule ID</label>
+                <div class="control">
+                    <input class="input" type="text" name="rule_id" placeholder="generic-api-key">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Owner</label>
+                <div class="control">
+                    <input class="input" type="text" name="type" placeholder="0xleft">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Date</label>
+                <div class="control">
+                    <input class="input" type="text" name="date" placeholder="2020-01-01">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Page</label>
+                <div class="control">
+                    <input class="input" type="text" name="page" placeholder="1">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-info">Search</button>
+                </div>
+            </div>
+            <input type="hidden" name="search" value="1">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+    </div>
+</section>
+
+{% else %}
+
+{% if result_count > 0 %}
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Results</h2>
+        <p class="subtitle">
+            Here are the results of your search.
+        </p>
+
+        {{ if error }}
+            <div class="notification is-danger">
+                {{ error }}
+            </div>
+        {{ endif }}
+
+        <table class="table is-narrow is-hoverable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>URL</th>
+                    <th>Commit</th>
+                    <th>Path</th>
+                    <th>Secret</th>
+                    <th>Match</th>
+                    <th>Rule ID</th>
+                    <th>Owner</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for (i, secret) in secrets %}
+                <tr>
+                    <td>{{ i + (page - 1) * PER_PAGE_COUNT }}</td>
+                    <td>{{ secret.url }}</td>
+                    <td>{{ secret.commit }}</td>
+                    <td>{{ secret.path }}</td>
+                    <td>{{ secret.secret }}</td>
+                    <td>{{ secret.match }}</td>
+                    <td>{{ secret.rule_id }}</td>
+                    <td>{{ secret.owner }}</td>
+                    <td>{{ secret.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            <a class="pagination-previous">Previous</a>
+            <a class="pagination-next">Next page</a>
+            <ul class="pagination-list">
+                <li><a class="pagination-link" aria-label="Goto page 1">{{ page_start }}</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page - 5 if page - 5 > 0 else 0 }}</a></li>
+                <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{ page }}</a></li>
+                <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page + 5 if page + 5 < page_end else page_end }}</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page 86">{{ page_end }}</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+{% else %}
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Results</h2>
+        <p class="subtitle">
+            No results found.
+        </p>
+    </div>
+</section>
+
+{% endif %}
+
+{% endif %}
+
 {% endblock content %}
