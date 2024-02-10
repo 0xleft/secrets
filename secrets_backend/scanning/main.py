@@ -5,6 +5,9 @@ import os
 import requests
 from config import VERBOSE, THREAD_COUNT, dotenv, SHOULD_SKIP_FORKS
 import threading
+import storage
+import sys
+# 131391033
 
 def delete_repo(path: str):
     rmtree(path)
@@ -14,7 +17,7 @@ def scan_repo(url: str, owner: str):
     repo_hash = hashlib.sha256(url.encode()).hexdigest()
 
     try:
-        repo = Repo.clone_from(url, f"tmp/{repo_hash}")
+        repo = Repo.clone_from(url, f"tmp/{repo_hash}", multi_options=["--filter=blob:limit=1m"])
     except KeyboardInterrupt:
         should_exit = True
     except Exception as e:
@@ -44,14 +47,6 @@ def get_repos(latest_id: int):
 
     return response.json()
 
-def save_latest_id(latest_id: int):
-    with open("latest_id", "w+") as f:
-        f.write(str(latest_id))
-
-def get_latest_id() -> int:
-    with open("latest_id", "r") as f:
-        return int(f.read())
-
 thread_count = 0
 def thread_scan(url: str, owner: str):
     global thread_count
@@ -64,8 +59,16 @@ def thread_scan(url: str, owner: str):
     thread_count -= 1
 
 if __name__ == "__main__":
+
+    # get first argument
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "init":
+            storage.mongo_client.drop_database("secrets")
+            storage.save_latest_id(int(sys.argv[2]))
+            exit(0)
+
     while True:
-        latest_id = get_latest_id()
+        latest_id = storage.get_latest_id()
         repos = get_repos(latest_id)
         # print(f"Scanning {len(repos)} repositories")
         for repo in repos:
@@ -74,7 +77,7 @@ if __name__ == "__main__":
             while thread_count >= THREAD_COUNT:
                 pass
             threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
-        save_latest_id(repos[-1]["id"])
+            storage.save_latest_id(repo["id"])
 
         while thread_count > 0:
             pass

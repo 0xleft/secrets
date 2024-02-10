@@ -5,6 +5,15 @@ from config import VERBOSE, dotenv
 mongo_client = pymongo.MongoClient(dotenv["MONGO_URI"])
 mongo_db = mongo_client["secrets"]
 
+def save_latest_id(latest_id: int):
+    return mongo_db["info"].update_one({}, {"$set": {"latest_id": latest_id}}, upsert=True)
+
+def get_latest_id() -> int:
+    obj = mongo_db["info"].find_one()
+    if obj is None:
+        return 0
+    return obj["latest_id"]
+
 class Secret():
     def __init__(self, url, commit, path, secret, match, rule_id, owner, date):
         self.url = url
