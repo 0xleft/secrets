@@ -17,7 +17,7 @@ def scan_repo(url: str, owner: str):
     repo_hash = hashlib.sha256(url.encode()).hexdigest()
 
     try:
-        repo = Repo.clone_from(url, f"tmp/{repo_hash}", multi_options=["--filter=blob:limit=1m"])
+        repo = Repo.clone_from(url, f"tmp/{repo_hash}", multi_options=["--filter=blob:limit=1m"], env={"GIT_TERMINAL_PROMPT": "0"})
     except KeyboardInterrupt:
         should_exit = True
     except Exception as e:
@@ -59,11 +59,10 @@ def thread_scan(url: str, owner: str):
     thread_count -= 1
 
 if __name__ == "__main__":
-
     # get first argument
     if len(sys.argv) > 1:
         if sys.argv[1] == "init":
-            storage.mongo_client.drop_database("secrets")
+            storage.mongo_db.drop_collection("secrets")
             storage.save_latest_id(int(sys.argv[2]))
             exit(0)
 
@@ -78,6 +77,8 @@ if __name__ == "__main__":
                 pass
             threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
             storage.save_latest_id(repo["id"])
+
+        storage.add_repo_count(len(repos))
 
         while thread_count > 0:
             pass

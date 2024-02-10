@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<section class="section is-large">
+    <div class="container">
+        <h1 class="title">Secrets</h1>
+        <p class="subtitle">
+            Many leaks happen on open source repositories. This is a tool that indexes a lot of github repositories and extracts the secrets from them.
+            <br>
+            <a href="/secrets/register">Register</a> to get your api key and start using the tool.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Stats</h2>
+        <p class="subtitle">
+            Here are some stats about the tool.
+        </p>
+
+        <nav class="level">
+            <div class="level-item has-text-centered">
+              <div>
+                <p class="heading">Repotories scanned</p>
+                <p class="title">{{ repo_count }}</p>
+              </div>
+            </div>
+            <div class="level-item has-text-centered">
+              <div>
+                <p class="heading">Secrets found</p>
+                <p class="title">{{ secret_count }}</p>
+              </div>
+            </div>
+        </nav>
+    </div>
+</section>
+
+{% endblock content %}

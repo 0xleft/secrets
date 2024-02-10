@@ -14,6 +14,12 @@ def get_latest_id() -> int:
         return 0
     return obj["latest_id"]
 
+def add_repo_count(repos: int):
+    return mongo_db["info"].update_one({}, {"$inc": {"repo_count": repos}}, upsert=True)
+
+def add_secret_count(secrets: int):
+    return mongo_db["info"].update_one({}, {"$inc": {"secret_count": secrets}}, upsert=True)
+
 class Secret():
     def __init__(self, url, commit, path, secret, match, rule_id, owner, date):
         self.url = url
@@ -42,6 +48,8 @@ def store(json_data: str, url: str, owner: str):
 
     for secret in json_data:
         Secret(url, secret["Commit"], secret["File"], secret["Secret"], secret["Match"], secret["RuleID"], owner, secret["Date"]).save()
+
+    add_secret_count(len(json_data))
 
     if VERBOSE:
         print(f"Stored {len(json_data)} secrets from {url}")

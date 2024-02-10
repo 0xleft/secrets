@@ -3,13 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>secrets</title>
+    <title>Secrets</title>
+    <link rel="icon" href="/secrets/static/troll_face.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
-<style>
-</style>
-
 <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/secrets">
+                <img src="/secrets/static/troll_face.png" width="36" height="36">
+                <span class="has-text-weight-bold">Secrets</span>
+            </a>
+    
+            <!-- support for mobile-->
+            <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/secrets/search">Search</a>
+                <a class="navbar-item" href="/secrets/docs">Documentation</a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-info" href="/secrets/login">
+                            <strong>Login</strong>
+                        </a>
+                        <a class="button is-light" href="/secrets/register">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            $navbarBurgers.forEach( el => {
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+        });
+    </script>
+
     {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Secrets</strong> by <a href="https://github.com/PageupOrg">PageupOrg</a>.
+            <br>
+            Meant for educational purposes only.
+          </p>
+        </div>
+      </footer>
 </body>
 </html>
