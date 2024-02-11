@@ -14,55 +14,55 @@
             <div class="field">
                 <label class="label">URL</label>
                 <div class="control">
-                    <input class="input" type="text" name="url" placeholder="https://github.com/username/repository">
+                    <input class="input" type="text" name="url" placeholder="https://github.com/username/repository" value="{{ url }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Commit</label>
                 <div class="control">
-                    <input class="input" type="text" name="commit" placeholder="fab4cfc793ec208162bbb33a2402c62d65a0e755">
+                    <input class="input" type="text" name="commit" placeholder="fab4cfc793ec208162bbb33a2402c62d65a0e755" value="{{ commit }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Path</label>
                 <div class="control">
-                    <input class="input" type="text" name="path" placeholder="app/controllers/application.rb">
+                    <input class="input" type="text" name="path" placeholder="app/controllers/application.rb" value="{{ path }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Secret</label>
                 <div class="control">
-                    <input class="input" type="text" name="secret" placeholder="password">
+                    <input class="input" type="text" name="secret" placeholder="password" value="{{ secret }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Match</label>
                 <div class="control">
-                    <input class="input" type="text" name="match" placeholder="secret => 'test">
+                    <input class="input" type="text" name="match" placeholder="secret => 'test" value="{{ match }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Rule ID</label>
                 <div class="control">
-                    <input class="input" type="text" name="rule_id" placeholder="generic-api-key">
+                    <input class="input" type="text" name="rule_id" placeholder="generic-api-key" value="{{ rule_id }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Owner</label>
                 <div class="control">
-                    <input class="input" type="text" name="type" placeholder="0xleft">
+                    <input class="input" type="text" name="type" placeholder="0xleft" value="{{ owner }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Date</label>
                 <div class="control">
-                    <input class="input" type="text" name="date" placeholder="2020-01-01">
+                    <input class="input" type="text" name="date" placeholder="2020-01-01" value="{{ date }}">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Page</label>
                 <div class="control">
-                    <input class="input" type="text" name="page" placeholder="1">
+                    <input class="input" type="text" name="page" placeholder="1" value="{{ page }}">
                 </div>
             </div>
             <div class="field">
@@ -78,9 +78,11 @@
 
 {% else %}
 
-{% if result_count > 0 %}
 
 <section class="section">
+    
+    {% if result_count > 0 %}
+
     <div class="container">
         <h2 class="title">Results</h2>
         <p class="subtitle">
@@ -124,20 +126,54 @@
             </tbody>
         </table>
     </div>
-</section>
 
-{% else %}
+    {% else %}
 
-<section class="section">
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Results</h2>
+            <p class="subtitle">
+                No results found.
+            </p>
+        </div>
+    </section>
+
+    {% endif %}
+
     <div class="container">
-        <h2 class="title">Results</h2>
-        <p class="subtitle">
-            No results found.
-        </p>
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            <ul class="pagination-list">
+                <form action="/secrets/search" method="post">
+                    <input type="hidden" name="url" value="{{ url }}">
+                    <input type="hidden" name="commit" value="{{ commit }}">
+                    <input type="hidden" name="path" value="{{ path }}">
+                    <input type="hidden" name="secret" value="{{ secret }}">
+                    <input type="hidden" name="match" value="{{ match }}">
+                    <input type="hidden" name="rule_id" value="{{ rule_id }}">
+                    <input type="hidden" name="owner" value="{{ owner }}">
+                    <input type="hidden" name="date" value="{{ date }}">
+                    <input type="hidden" name="page" value="{{ page - 1 }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <a class="pagination-previous" onclick="this.parentNode.submit()">Previous</a>
+                </form>
+                <li><a class="pagination-link is-current" aria-label="Page {{ page }}" aria-current="page">{{ page }}</a></li>
+                <form action="/secrets/search" method="post">
+                    <input type="hidden" name="url" value="{{ url }}">
+                    <input type="hidden" name="commit" value="{{ commit }}">
+                    <input type="hidden" name="path" value="{{ path }}">
+                    <input type="hidden" name="secret" value="{{ secret }}">
+                    <input type="hidden" name="match" value="{{ match }}">
+                    <input type="hidden" name="rule_id" value="{{ rule_id }}">
+                    <input type="hidden" name="owner" value="{{ owner }}">
+                    <input type="hidden" name="date" value="{{ date }}">
+                    <input type="hidden" name="page" value="{{ page + 1 }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <a class="pagination-next" onclick="this.parentNode.submit()">Next</a>
+                </form>
+            </ul>
+        </nav>
     </div>
 </section>
-
-{% endif %}
 
 {% endif %}
 
