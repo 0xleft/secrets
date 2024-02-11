@@ -3,6 +3,7 @@ import pymongo
 from ..common.config import dotenv, PER_PAGE_COUNT
 from functools import wraps
 from flask import session, redirect, url_for, flash
+import math
 
 client = pymongo.MongoClient(dotenv["MONGO_URI"])
 db = client["secrets"]
@@ -66,7 +67,10 @@ def api_search():
     except:
         page = 1
 
-    results = db["secrets"].find(query, limit=100, skip=(page - 1) * PER_PAGE_COUNT)
+    end = math.ceil(db["info"].find_one()["secret_count"] / PER_PAGE_COUNT)
+    if page > end:
+        page = end
+    results = db["secrets"].find(query, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
     return jsonify([{
         "url": result["url"],
         "commit": result["commit"],

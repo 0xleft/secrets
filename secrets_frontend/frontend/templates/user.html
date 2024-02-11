@@ -32,10 +32,10 @@
             </div>
         </div>
         <div class="container is-flex-direction-row is-flex">
-            <form action="/secrets/user" method="post">
+            <form action="/secrets/user" method="post" style="padding-right: 10px;">
                 <input type="hidden" name="reset_key" value="{{ user['id'] }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button class="button is-success">Reset key</button>
+                <button class="button is-success">Generate new key</button>
             </form>
 
             <form action="/secrets/user" method="post">

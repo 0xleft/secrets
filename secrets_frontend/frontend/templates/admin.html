@@ -68,46 +68,29 @@
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Api key</th>
                     <th>Api key uses left</th>
-                    <th>Created at</th>
                     <th>Is deleted</th>
+                    <td>Is Admin</td>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                     <tr>
+                        <td>{{ user["id"] }}</td>
                         <td>{{ user["login"] }}</td>
                         <td>{{ user["email"] }}</td>
-                        <td>{{ user["api_key"][:10] }}...</td>
+                        <td class="is-hidden">{{ user["api_key"] }}</td>
+
                         <td>{{ user["api_key_uses_left"] }}</td>
-                        <td>{{ user["created_at"] }}</td>
                         <td>{{ user["is_deleted"] }}</td>
-
+                        <td>{{ user["is_admin"] }}</td>
                         <td>
-                            <form action="/secrets/admin" method="post">
-                                <input type="hidden" name="reset_key_uses" value="{{ user['id'] }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button class="button is-success">Reset key</button>
-                            </form>
-                        </td>
-
-                        <td>
-                            <form action="/secrets/admin" method="post">
-                                <input type="hidden" name="end_key_uses" value="{{ user['id'] }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button class="button is-danger">End key</button>
-                            </form>
-                        </td>
-
-                        <td>
-                            <form action="/secrets/admin" method="post">
-                                <input type="hidden" name="delete_user" value="{{ user['id'] }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button class="button is-danger">Delete</button>
-                            </form>
+                            <button class="js-modal-trigger button is-primary" data-target="modal-js">
+                                Edit
+                            </button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -180,8 +163,133 @@
                 <button class="button is-danger">Delete all secrets</button>
             </form>
         </div>
-
     </div>
 </section>
+
+<div class="modal" id="modal-js">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+        <p class="modal-card-title"></p>
+        <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form action="/secrets/admin" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="update_user" value="1"> <!-- user id is set here -->
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" placeholder="Username" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input class="input" type="text" name="email" placeholder="Email" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Api key</label>
+                    <div class="control">
+                        <input class="input" type="text" name="api_key" placeholder="Api key" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Api key uses left</label>
+                    <div class="control">
+                        <input class="input" type="text" name="api_key_uses_left" placeholder="Api key uses left" value="">
+                    </div>
+                </div>
+                <div class="is-flex is-flex-direction-row">
+                    <div class="field">
+                        <label class="label">Is Deleted</label>
+                        <div class="control">
+                            <!-- select from dropdown -->
+                            <div class="select">
+                                <select name="is_deleted">
+                                    <option value="False">False</option>
+                                    <option value="True">True</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Is Admin</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="is_admin">
+                                    <option value="False">False</option>
+                                    <option value="True">True</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-info">Update</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+        <button class="button">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function openModal($el) {
+            $el.classList.add('is-active');
+        }
+
+        function closeModal($el) {
+            $el.classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+            (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                closeModal($modal);
+            });
+        }
+
+        (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+            const modal = $trigger.dataset.target;
+            const $target = document.getElementById(modal);
+
+            $trigger.addEventListener('click', () => {
+                openModal($target);
+                // set the user stuff in the form
+                
+                $target.querySelector('input[name="username"]').value = $trigger.closest('tr').querySelector('td:nth-child(2)').textContent;
+                $target.querySelector('input[name="email"]').value = $trigger.closest('tr').querySelector('td:nth-child(3)').textContent;
+                $target.querySelector('input[name="api_key"]').value = $trigger.closest('tr').querySelector('td:nth-child(4)').textContent;
+                $target.querySelector('input[name="api_key_uses_left"]').value = $trigger.closest('tr').querySelector('td:nth-child(5)').textContent;
+                $target.querySelector('select[name="is_deleted"]').value = $trigger.closest('tr').querySelector('td:nth-child(6)').textContent;
+                $target.querySelector('select[name="is_admin"]').value = $trigger.closest('tr').querySelector('td:nth-child(7)').textContent;
+
+                // set the user id in the form
+                $target.querySelector('input[name="update_user"]').value = $trigger.closest('tr').querySelector('td:nth-child(1)').textContent;
+            });
+        });
+
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+
+            $close.addEventListener('click', () => {
+                closeModal($target);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if(event.key === "Escape") {
+                closeAllModals();
+            }
+        });
+    });
+</script>
 
 {% endblock content %}

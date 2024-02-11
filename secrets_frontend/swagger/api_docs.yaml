@@ -7,14 +7,174 @@ info:
     email: bobiknobig@duck.com
   version: 1.0.11
 servers:
-  - url: https://pageup.lt/secrets/api
+  - url: https://pageup.lt/
     description: Production server
-tags:
-  - name: search
-    description: Search operations
-  - name: scan
-    description: Scan operations
-  - name: user
-    description: Operations about user
 paths:
-  
+  /secrets/api/health:
+    get:
+      summary: Check the health of the API
+      operationId: healthCheck
+      parameters:
+        - name: Authorization
+          in: header
+          description: API key
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: API is healthy
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '500':
+          description: API is unhealthy
+  /secrets/api/search:
+    get:
+      summary: Search for secrets
+      operationId: searchSecrets
+      parameters:
+        - name: Authorization
+          in: header
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: url
+          in: query
+          description: url to search for
+          required: false
+          schema:
+            type: string
+        - name: commit
+          in: query
+          description: commit to search for
+          required: false
+          schema:
+            type: string
+        - name: path
+          in: query
+          description: path to search for
+          required: false
+          schema:
+            type: string
+        - name: secret
+          in: query
+          description: secret to search for
+          required: false
+          schema:
+            type: string
+        - name: match
+          in: query
+          description: match to search for
+          required: false
+          schema:
+            type: string
+        - name: rule_id
+          in: query
+          description: rule_id to search for
+          required: false
+          schema:
+            type: string
+        - name: owner
+          in: query
+          description: owner to search for
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: date to search for
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Secret'
+        '400':
+          description: bad input parameter
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '404':
+          description: not found
+        '500':
+          description: internal server error
+  /secrets/api/user:
+    get:
+      summary: Get user details
+      operationId: getUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: API key
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: bad input parameter
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '404':
+          description: not found
+        '500':
+          description: internal server error
+
+components:
+  schemas:
+    Secret:
+      type: object
+      properties:
+        url:
+          type: string
+        commit:
+          type: string
+        path:
+          type: string
+        secret:
+          type: string
+        match:
+          type: string
+        rule_id:
+          type: string
+        owner:
+          type: string
+        date:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        login:
+          type: string
+        email:
+          type: string
+        is_admin:
+          type: boolean
+        api_key_uses_left:
+          type: integer
