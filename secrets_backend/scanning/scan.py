@@ -10,7 +10,7 @@ def is_safe(dir: str):
             return False
     return True
 
-def scan_gitleaks(repo: Repo, url: str, owner: str):
+def scan_gitleaks(repo: Repo, url: str, owner: str, requester):
 
     if not is_safe(repo.working_dir):
         raise Exception(f"Invalid directory name {repo.working_dir}!")
@@ -19,7 +19,7 @@ def scan_gitleaks(repo: Repo, url: str, owner: str):
 
     try:
         with open(f"{repo.working_dir}_gitleaks.json", "r") as f:
-            storage.store(f.read(), url, owner)
+            storage.store(f.read(), url, owner, requester)
     except Exception as e:
         if VERBOSE:
             print(e)

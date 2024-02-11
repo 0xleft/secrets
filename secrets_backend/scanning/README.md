@@ -1,7 +1,15 @@
 ### Starting
 
+Normal public repo scanning
+
 ```python
 python3 main.py
+```
+
+Service scan
+
+```python
+python3 main.py service
 ```
 
 ### Reload

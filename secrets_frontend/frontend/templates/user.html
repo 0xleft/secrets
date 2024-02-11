@@ -45,6 +45,193 @@
             </form>
         </div>
     </div>
-    </section>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title is-2">Scan repository</h2>
+        <p class="subtitle">
+            Scan a repository for secrets.
+        </p>
+        <form action="/secrets/api/scan" method="post" id="scan_form">
+            <div class="field">
+                <label class="label">Repository</label>
+                <div class="control">
+                    <input class="input" type="text" name="repo" placeholder="https://github.com/owner/repo">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-info">Scan</button>
+                </div>
+            </div>
+        </form>
+
+        <script>
+            // on document loaded
+            document.addEventListener("DOMContentLoaded", function () {
+                $("#scan_form").submit(function (event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var url = form.attr("action");
+                    // set url param ?url=
+                    url += "?url=" + form.find("input[name='repo']").val();
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        headers: {
+                            "Authorization": "{{ user['api_key'] }}"
+                        },
+                        success: function (data) {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title is-2">Scans</h2>
+        <p class="subtitle">
+            Scans performed by the user.
+        </p>
+
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Url</th>
+                    <td>Secret count</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scan in scans %}
+                <tr>
+                    <td>{{ scan["status"] }}</td>
+                    <td>{{ scan["url"] }}</td>
+                    <td>{{ scan["secrets"].__len__() }}</td>
+                    <td>
+                        <button class="button is-info" onclick="showInfo('{{ scan['url'] }}')">Info</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+            function showInfo(repo) {
+
+            }
+        </script>
+    </div>
+</section>
+
+<div class="modal" id="modal-js">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+        <p class="modal-card-title">Scan info</p>
+        <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <fieldset disabled>
+                <div class="field">
+                    <label class="label">Url</label>
+                    <div class="control is-loading will-be-loading">
+                        <input class="input" type="text" name="url" placeholder="Loading...">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Status</label>
+                    <div class="control is-loading will-be-loading">
+                        <input class="input" type="text" name="status" placeholder="Loading...">
+                    </div>
+                </div>
+                <!-- table for secrets -->
+                <div class="field">
+                    <label class="label">Secrets</label>
+                    <div class="control is-loading will-be-loading">
+                        <table class="table is-narrow is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Path</th>
+                                    <th>Secret</th>
+                                    <th>Match</th>
+                                    <th>Rule ID</th>
+                                    <th>Owner</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="secrets-modal"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    </div>
+</div>
+
+<script>
+        function showInfo(repo) {
+            $(".modal").addClass("is-active");
+            $.ajax({
+                type: "GET",
+                url: "/secrets/api/scan/info" + "?url=" + repo,
+                headers: {
+                    "Authorization": "{{ user['api_key'] }}"
+                },
+                success: function (data) {
+                    var secrets = data["secrets"];
+                    var html = "";
+                    for (var i = 0; i < secrets.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + (i + 1) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["path"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["secret"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["match"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["rule_id"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["owner"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["date"]) + "</td>";
+                        html += "</tr>";
+                    }
+                    $("#secrets-modal").html(html);
+                    $("input[name='url']").val(repo);
+                    $("input[name='status']").val(data["status"]);
+
+                    $(".is-loading").removeClass("is-loading");
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        $(".delete").click(function () {
+            $(".modal").removeClass("is-active");
+
+            $(".will-be-loading").addClass("is-loading");
+        });
+
+        $(".modal-background").click(function () {
+            $(".modal").removeClass("is-active");
+
+            $(".will-be-loading").addClass("is-loading");
+        });
+
+        $(".modal-close").click(function () {
+            $(".modal").removeClass("is-active");
+
+            $(".will-be-loading").addClass("is-loading");
+        });
+    });
+</script>
 
 {% endblock content %}

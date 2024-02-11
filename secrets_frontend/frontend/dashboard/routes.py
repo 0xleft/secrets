@@ -15,7 +15,19 @@ def user():
         return redirect(url_for("auth.login"))
 
     user = db["users"].find_one({"id": session["id"]})
-    return render_template("user.html", user=user)
+    scan_page = request.args.get("scan_page")
+    if scan_page is None:
+        scan_page = 1
+    else:
+        try:
+            scan_page = int(scan_page)
+            if scan_page < 1:
+                scan_page = 1
+        except:
+            scan_page = 1
+
+    scans = list(db["scans"].find({"user_id": session["id"]}, limit=PER_PAGE_COUNT, skip=(scan_page-1)*PER_PAGE_COUNT).sort("date", -1))
+    return render_template("user.html", user=user, scans=scans, page=scan_page, page_end=(math.ceil(len(scans) / PER_PAGE_COUNT)))
 
 @dashboard.route('/secrets/user', methods=["POST"])
 def user_post():

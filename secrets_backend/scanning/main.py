@@ -7,14 +7,19 @@ from config import VERBOSE, THREAD_COUNT, dotenv, SHOULD_SKIP_FORKS
 import threading
 import storage
 import sys
+from storage import mongo_db
+import time
 # 131391033
 
 def delete_repo(path: str):
     rmtree(path)
 
-def scan_repo(url: str, owner: str):
+def scan_repo(url: str, owner: str, requester=None):
     should_exit = False
-    repo_hash = hashlib.sha256(url.encode()).hexdigest()
+    to_hash = url
+    if requester is not None:
+        to_hash += requester
+    repo_hash = hashlib.sha256(to_hash.encode()).hexdigest()
 
     try:
         repo = Repo.clone_from(url, f"tmp/{repo_hash}", multi_options=["--filter=blob:limit=1m"], env={"GIT_TERMINAL_PROMPT": "0"})
@@ -26,7 +31,7 @@ def scan_repo(url: str, owner: str):
             print(e)
         return
     try:
-        scan.scan_gitleaks(repo, url, owner)
+        scan.scan_gitleaks(repo, url, owner, requester)
     except Exception as e:
         if VERBOSE:
             print(e)
@@ -60,25 +65,35 @@ def thread_scan(url: str, owner: str):
 
 if __name__ == "__main__":
     # get first argument
+    service = False
     if len(sys.argv) > 1:
         if sys.argv[1] == "init":
             storage.mongo_db.drop_collection("secrets")
             storage.save_latest_id(int(sys.argv[2]))
             exit(0)
+        if sys.argv[1] == "service":
+            service = True
+    if not service:
+        while True:
+            latest_id = storage.get_latest_id()
+            repos = get_repos(latest_id)
+            # print(f"Scanning {len(repos)} repositories")
+            for repo in repos:
+                if repo["fork"] and SHOULD_SKIP_FORKS:
+                    continue
+                while thread_count >= THREAD_COUNT:
+                    pass
+                threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
+                storage.save_latest_id(repo["id"])
 
-    while True:
-        latest_id = storage.get_latest_id()
-        repos = get_repos(latest_id)
-        # print(f"Scanning {len(repos)} repositories")
-        for repo in repos:
-            if repo["fork"] and SHOULD_SKIP_FORKS:
-                continue
-            while thread_count >= THREAD_COUNT:
+            storage.add_repo_count(len(repos))
+
+            while thread_count > 0:
                 pass
-            threading.Thread(target=thread_scan, args=(repo["html_url"], repo["owner"]["login"], )).start()
-            storage.save_latest_id(repo["id"])
+    else:
+        while True:
+            request_scan = mongo_db["scans"].find_one({"status": "pending"})
+            if request_scan is not None:
+                scan_repo(request_scan["url"], "unknown", str(request_scan["user_id"]))
 
-        storage.add_repo_count(len(repos))
-
-        while thread_count > 0:
-            pass
+            time.sleep(0.1)
