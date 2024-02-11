@@ -81,4 +81,11 @@ def api_search():
 @api.route("/secrets/api/user", methods=["GET"])
 @logged_in(False)
 def api_user():
-    pass
+    user = db["users"].find_one({"api_key": request.headers.get("Authorization")})
+    return jsonify({
+        "id": user["id"],
+        "login": user["login"],
+        "email": user["email"],
+        "is_admin": user["is_admin"],
+        "api_key_uses_left": user["api_key_uses_left"]
+    })
