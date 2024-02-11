@@ -1,9 +1,10 @@
 from flask import Flask
 import random
+import frontend.common.config as config
 
 def start():
     app = Flask(__name__)
-    app.secret_key = random.randbytes(4096)
+    app.secret_key = config.dotenv["FLASK_SECRET"]
 
     from .main.routes import main
     from .auth.routes import create
