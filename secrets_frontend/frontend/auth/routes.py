@@ -39,7 +39,10 @@ def login():
 
         return render_template("login.html")
     else:
-        return github.authorize_redirect(url_for("auth.authorize", _external=True))
+        if dotenv["DEV"] == "1":
+            return github.authorize_redirect(url_for("auth.authorize", _external=True, ))
+        else:
+            return github.authorize_redirect("https://pageup.lt/secrets/github/callback")
 
 @auth.route('/secrets/github/callback')
 def authorize():
