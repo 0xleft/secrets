@@ -53,13 +53,7 @@ def search():
         query["date"] = date
 
     page_end = min(math.ceil(db["info"].find_one()["secret_count"] / PER_PAGE_COUNT), MAX_PAGE_COUNT)
-    # if user not logged in use secrets_public collection
-    collection = "secrets"
-    if "email" not in session:
-        collection = "secrets_public"
-    if page > page_end:
-        page = page_end
-    results = db[collection].find(query, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
+    results = db["secrets"].find(query, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
     results_count = len(list(results.clone()))
     return render_template("search.html", secrets=enumerate(results), page=page, page_end=page_end, page_start=0, result_count=results_count, PER_PAGE_COUNT=PER_PAGE_COUNT)
 
