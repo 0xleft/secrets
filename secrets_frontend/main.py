@@ -13,4 +13,4 @@ if __name__ == '__main__':
     if dotenv["DEV"] == "1":
         app.run(debug=True, port=9434, host="0.0.0.0")
     else:
-        waitress.serve(app, port=9434, debug=False, host="0.0.0.0")
+        waitress.serve(app, port=9434)
