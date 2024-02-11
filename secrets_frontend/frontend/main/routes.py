@@ -59,4 +59,4 @@ def search():
 
 @main.route('/secrets/docs', methods=['GET', 'POST'])
 def docs():
-    return render_template("docs.html")
+    return redirect(url_for('static.static_files', filename='docs/index.html'))

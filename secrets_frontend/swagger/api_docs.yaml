@@ -178,3 +178,8 @@ components:
           type: boolean
         api_key_uses_left:
           type: integer
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
