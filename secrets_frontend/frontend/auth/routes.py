@@ -47,7 +47,6 @@ def login():
 @auth.route('/secrets/github/callback')
 def authorize():
     global github
-    print(request.args)
     token = github.authorize_access_token()
     resp = github.get("user", token=token)
     profile = resp.json()
