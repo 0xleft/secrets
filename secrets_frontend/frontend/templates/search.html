@@ -84,7 +84,7 @@
     <div class="container">
         <h2 class="title">Results</h2>
         <p class="subtitle">
-            Here are the results of your search.
+            There ya go.
         </p>
 
         {% if error %}
@@ -123,22 +123,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-
-    <div class="container">
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-            <a class="pagination-previous">Previous</a>
-            <a class="pagination-next">Next page</a>
-            <ul class="pagination-list">
-                <li><a class="pagination-link" aria-label="Goto page 1">{{ page_start }}</a></li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page - 5 if page - 5 > 0 else 0 }}</a></li>
-                <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{ page }}</a></li>
-                <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page + 5 if page + 5 < page_end else page_end }}</a></li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li><a class="pagination-link" aria-label="Goto page 86">{{ page_end }}</a></li>
-            </ul>
-        </nav>
     </div>
 </section>
 

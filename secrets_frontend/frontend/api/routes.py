@@ -1,6 +1,6 @@
 from flask import render_template, request, Blueprint, redirect, url_for, session, jsonify
 import pymongo
-from ..common.config import dotenv
+from ..common.config import dotenv, PER_PAGE_COUNT
 from functools import wraps
 from flask import session, redirect, url_for, flash
 
@@ -24,22 +24,61 @@ def logged_in(count=True):
             if user["api_key_uses_left"] < 1:
                 return jsonify({"error": "No uses left"}), 403
             if count:
-                db["users"].update_one({"api_key": auth}, {"$dec": {"api_key_uses_left": 1}})
+                db["users"].update_one({"api_key": auth}, {"$inc": {"api_key_uses_left": -1}})
             return f(*args, **kwargs)
         return decorated_function
     return decorator
 
+@api.route("/secrets/api/health", methods=["GET"])
 @logged_in(False)
-@api.route("/secrets/api/health", methods=["GET", "POST"])
 def api_health():
     return jsonify({"status": "ok"})
 
+@api.route("/secrets/api/search", methods=["GET"])
 @logged_in()
-@api.route("/secrets/api/search", methods=["GET", "POST"])
 def api_search():
-    pass
+    # get from params
+    params = request.args
 
+    query = {}
+    if "url" in params:
+        query["url"] = {"$regex": params["url"]}
+    if "commit" in params:
+        query["commit"] = {"$regex": params["commit"]}
+    if "path" in params:
+        query["path"] = {"$regex": params["path"]}
+    if "secret" in params:
+        query["secret"] = {"$regex": params["secret"]}
+    if "match" in params:
+        query["match"] = {"$regex": params["match"]}
+    if "rule_id" in params:
+        query["rule_id"] = {"$regex": params["rule_id"]}
+    if "owner" in params:
+        query["owner"] = {"$regex": params["owner"]}
+    if "date" in params:
+        query["date"] = {"$regex": params["date"]}
+
+    page = params.get("page", 1)
+    try:
+        page = int(page)
+        if page < 1:
+            page = 1
+    except:
+        page = 1
+
+    results = db["secrets"].find(query, limit=100, skip=(page - 1) * PER_PAGE_COUNT)
+    return jsonify([{
+        "url": result["url"],
+        "commit": result["commit"],
+        "path": result["path"],
+        "secret": result["secret"],
+        "match": result["match"],
+        "rule_id": result["rule_id"],
+        "owner": result["owner"],
+        "date": result["date"]
+    } for result in list(results)])
+
+@api.route("/secrets/api/user", methods=["GET"])
 @logged_in(False)
-@api.route("/secrets/api/user", methods=["GET", "POST"])
 def api_user():
     pass
