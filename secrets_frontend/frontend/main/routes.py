@@ -8,7 +8,7 @@ db = client["secrets"]
 
 main = Blueprint('main', __name__)
 
-@main.route('/secrets')
+@main.route('/secrets/')
 def index():
     repo_count = db["info"].find_one()["repo_count"]
     secret_count = db["info"].find_one()["secret_count"]

@@ -31,7 +31,7 @@ def create(app):
     )
     return auth
 
-@auth.route("/secrets/login", methods=["GET", "POSt"])
+@auth.route("/secrets/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         if "id" in session:
