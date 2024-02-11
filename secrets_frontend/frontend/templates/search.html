@@ -80,13 +80,17 @@
 
 
 <section class="section">
-    
+
     {% if result_count > 0 %}
 
     <div class="container">
         <h2 class="title">Results</h2>
         <p class="subtitle">
+            {% if session["logged_in"] %}
             There ya go.
+            {% else %}
+            You are not logged in. Results have been redacted.
+            {% endif %}
         </p>
 
         {% if error %}
