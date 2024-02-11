@@ -21,12 +21,6 @@
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">Api key count</p>
-                <p class="title">{{ api_key_users.__len__() }}</p>
-            </div>
-        </div>
-        <div class="level-item has-text-centered">
-            <div>
                 <p class="heading">Secret count</p>
                 <p class="title">{{ info["secret_count"] }}</p>
             </div>
@@ -53,6 +47,24 @@
             Here are the users that have registered.
         </p>
 
+        <form action="/secrets/admin" method="post">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input class="input" type="text" name="username" placeholder="Username" value="{{ search if search else '' }}">
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="search" value="1">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-info">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <br>
+
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
                 <tr>
@@ -61,6 +73,7 @@
                     <th>Api key</th>
                     <th>Api key uses left</th>
                     <th>Created at</th>
+                    <th>Is deleted</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,12 +84,21 @@
                         <td>{{ user["api_key"][:10] }}...</td>
                         <td>{{ user["api_key_uses_left"] }}</td>
                         <td>{{ user["created_at"] }}</td>
+                        <td>{{ user["is_deleted"] }}</td>
 
                         <td>
                             <form action="/secrets/admin" method="post">
                                 <input type="hidden" name="reset_key_uses" value="{{ user['id'] }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button class="button is-success">Reset key</button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <form action="/secrets/admin" method="post">
+                                <input type="hidden" name="end_key_uses" value="{{ user['id'] }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button class="button is-danger">End key</button>
                             </form>
                         </td>
 
@@ -92,17 +114,73 @@
             </tbody>
         </table>
 
-        <form action="/secrets/admin" method="post">
-            <input type="hidden" name="delete_all_users" value="1">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="button is-danger">Delete all users</button>
-        </form>
+        <div class="container">
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                <a class="pagination-previous">Previous</a>
+                <a class="pagination-next">Next page</a>
 
-        <form action="/secrets/admin" method="post">
-            <input type="hidden" name="delete_all_secrets" value="1">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="button is-danger">Delete all secrets</button>
-        </form>
+                <ul class="pagination-list">
+                    <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page - 5 if page - 5 > 0 else 0 }}</a></li>
+                    <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{ page }}</a></li>
+                    <li><a class="pagination-link" aria-label="Goto page {{ page + 5 if page + 5 < page_end else page_end }}">{{ page + 5 if page + 5 < page_end else page_end }}</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const $paginationPrevious = document.querySelector('.pagination-previous');
+                const $paginationNext = document.querySelector('.pagination-next');
+
+                $paginationPrevious.addEventListener('click', () => {
+                    $.ajax({
+                        url: '/secrets/admin',
+                        type: 'post',
+                        data: {
+                            page: '{{ page - 1 }}',
+                            username: '{{ search }}',
+                            csrf_token: '{{ csrf_token() }}'
+                        },
+                    });
+                });
+
+                $paginationNext.addEventListener('click', () => {
+                    $.ajax({
+                        url: '/secrets/admin',
+                        type: 'post',
+                        data: {
+                            page: '{{ page + 1 }}',
+                            username: '{{ search }}',
+                            csrf_token: '{{ csrf_token() }}'
+                        },
+                    });
+                });
+            });
+        </script>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Danger</h2>
+        <p class="subtitle">
+            Be careful please :)
+        </p>
+
+        <div class="container">
+            <form action="/secrets/admin" method="post">
+                <input type="hidden" name="delete_all_users" value="1">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button is-danger">Delete all users</button>
+            </form>
+    
+            <form action="/secrets/admin" method="post">
+                <input type="hidden" name="delete_all_secrets" value="1">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button is-danger">Delete all secrets</button>
+            </form>
+        </div>
+
     </div>
 </section>
 

@@ -1,4 +1,50 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h2 class="title is-2">User</h2>
+                    <p class="subtitle">
+                        Information about the user.
+                    </p>
+                    <table class="table is-fullwidth">
+                        <tr>
+                            <th>Username</th>
+                            <td>{{ user["login"] }}</td>
+                        </tr>
+                        <tr>
+                            <th>API Key</th>
+                            <td>{{ user["api_key"] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td>{{ user["created_at"] }}</td>
+                        </tr>
+                        <tr>
+                            <th>API Key uses left</th>
+                            <td>{{ user["api_key_uses_left"] }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container is-flex-direction-row is-flex">
+            <form action="/secrets/user" method="post">
+                <input type="hidden" name="reset_key" value="{{ user['id'] }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button is-success">Reset key</button>
+            </form>
+
+            <form action="/secrets/user" method="post">
+                <input type="hidden" name="delete_account" value="{{ user['id'] }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button is-danger">Delete user</button>
+            </form>
+        </div>
+    </div>
+    </section>
+
 {% endblock content %}

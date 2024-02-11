@@ -5,6 +5,7 @@ import hashlib
 from authlib.integrations.flask_client import OAuth
 import datetime
 import random
+from ..common.utils import generate_api_key
 
 client = pymongo.MongoClient(dotenv["MONGO_URI"])
 db = client["secrets"]
@@ -13,9 +14,6 @@ auth = Blueprint("auth", __name__)
 
 github = None
 oauth = None
-
-def generate_api_key():
-    return hashlib.sha256(str(random.getrandbits(4096)).encode()).hexdigest()
 
 def create(app):
     global github, oauth
@@ -51,9 +49,11 @@ def authorize():
     profile = resp.json()
 
     user = db["users"].find_one({"id": profile["id"]})
+    if user is not None and user["is_deleted"] == True and not user["is_admin"]:
+        return redirect(url_for("auth.login"), error="Account is deleted")
     if user is None:
         if dotenv["CAN_REGISTER"] == "0":
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login"), error="Registration is temporarely disabled")
         resp = github.get("user/emails", token=token)
         emails = resp.json()
         email = None
@@ -73,13 +73,22 @@ def authorize():
             "updated_at": datetime.datetime.now(),
             "api_key": generate_api_key(),
             "api_key_uses_left": DEFAULT_KEY_USES,
+            "last_ip": "",
+            "is_deleted": False
         })
 
-    session["id"] = profile["id"]
+    session["id"] = int(profile["id"])
     session["login"] = profile["login"]
     session["email"] = profile["email"]
     session["is_admin"] = int(profile["id"]) == int(dotenv["ADMIN_ID"])
     session["logged_in"] = True
+    
+    db["users"].update_one({"id": profile["id"]}, {"$set": {"updated_at": datetime.datetime.now()}})
+    if "X-Forwarded-For" in request.headers:
+        ip = request.headers["X-Forwarded-For"]
+    else:
+        ip = request.remote_addr
+    db["users"].update_one({"id": profile["id"]}, {"$set": {"last_ip": ip}})
     return redirect(url_for("main.index"))
 
 @auth.route("/secrets/logout", methods=["GET", "POST"])
