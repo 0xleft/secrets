@@ -56,8 +56,8 @@ def authorize():
     if user is not None and user["is_deleted"] == True and not user["is_admin"]:
         return redirect(url_for("auth.login"), error="Account is deleted")
     if user is None:
-        if dotenv["CAN_REGISTER"] == "0":
-            return redirect(url_for("auth.login"), error="Registration is temporarely disabled")
+        if dotenv["CAN_REGISTER"] == "0" and not int(profile["id"]) == int(dotenv["ADMIN_ID"]):
+            return redirect(url_for("auth.login", error="Registration is temporarely disabled"))
         resp = github.get("user/emails", token=token)
         emails = resp.json()
         email = None
