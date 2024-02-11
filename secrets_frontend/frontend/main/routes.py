@@ -36,21 +36,21 @@ def search():
 
     query = {}
     if url != "":
-        query["url"] = {"url": {"$regex": url, "$options": "i"}}
+        query["url"] = {"$regex": url, "$options": "i"}
     if commit != "":
-        query["commit"] = {"commit": {"$regex": commit, "$options": "i"}}
+        query["commit"] = {"$regex": commit, "$options": "i"}
     if path != "":
-        query["path"] = {"path": {"$regex": path, "$options": "i"}}
+        query["path"] = {"$regex": path, "$options": "i"}
     if secret != "":
-        query["secret"] = {"secret": {"$regex": secret, "$options": "i"}}
+        query["secret"] = {"$regex": secret, "$options": "i"}
     if match != "":
-        query["match"] = {"match": {"$regex": match, "$options": "i"}}
+        query["match"] = {"$regex": match, "$options": "i"}
     if rule_id != "":
-        query["rule_id"] = {"rule_id": {"$regex": rule_id, "$options": "i"}}
+        query["rule_id"] = {"$regex": rule_id, "$options": "i"}
     if owner != "":
-        query["owner"] = {"owner": {"$regex": owner, "$options": "i"}}
+        query["owner"] = {"$regex": owner, "$options": "i"}
     if date != "":
-        query["date"] = {"date": {"$regex": date, "$options": "i"}}
+        query["date"] = {"$regex": date, "$options": "i"}
 
     page_end = min(math.ceil(db["info"].find_one()["secret_count"] / PER_PAGE_COUNT), MAX_PAGE_COUNT)
     results = db["secrets"].find(query if session.get("logged_in", "") != "" else {}, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
