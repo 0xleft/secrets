@@ -54,15 +54,30 @@
             Scan a repository for secrets.
         </p>
         <form action="/secrets/api/scan" method="post" id="scan_form">
-            <div class="field">
-                <label class="label">Repository</label>
+            <div class="field has-addons">
                 <div class="control">
                     <input class="input" type="text" name="repo" placeholder="https://github.com/owner/repo">
                 </div>
-            </div>
-            <div class="field">
                 <div class="control">
-                    <button class="button is-info">Scan</button>
+                    <button class="button is-info">Scan Repository</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <h2 class="title is-2">Scan organization</h2>
+        <p class="subtitle">
+            Scan an organization for secrets.
+        </p>
+        <form action="/secrets/api/scan_org" method="post" id="scan_form_org">
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input" type="text" name="org" placeholder="github">
+                </div>
+                <div class="control">
+                    <button class="button is-info">Scan Organization</button>
                 </div>
             </div>
         </form>
@@ -84,6 +99,29 @@
                         },
                         success: function (data) {
                             window.location.reload();
+                        },
+                        error: function (data) {
+                            alert(data.responseJSON["error"]);
+                        }
+                    });
+                });
+
+                $("#scan_form_org").submit(function (event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var url = form.attr("action");
+                    url += "?org=" + form.find("input[name='org']").val();
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        headers: {
+                            "Authorization": "{{ user['api_key'] }}"
+                        },
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (data) {
+                            alert(data.responseJSON["error"]);
                         }
                     });
                 });
@@ -99,11 +137,41 @@
             Scans performed by the user.
         </p>
 
+        <form action="/secrets/user" method="post">
+            <input type="hidden" name="search" value="1">
+            <div class="field">
+                <label class="label">Status</label>
+                <div class="control">
+                    <input class="input" type="text" name="status" placeholder="done" value="{{ search['status'] }}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Url</label>
+                <div class="control">
+                    <input class="input" type="text" name="url" placeholder="https://github/com/owner/repo" value="{{ search['url'] }}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Org</label>
+                <div class="control">
+                    <input class="input" type="text" name="org" placeholder="github" value="{{ search['org'] }}">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input type="hidden" name="search" value="1">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="button is-info">Search</button>
+                </div>
+            </div>
+        </form>
+
         <table class="table is-fullwidth">
             <thead>
                 <tr>
                     <th>Status</th>
                     <th>Url</th>
+                    <th>Org</th>
                     <td>Secret count</td>
                 </tr>
             </thead>
@@ -112,6 +180,7 @@
                 <tr>
                     <td>{{ scan["status"] }}</td>
                     <td>{{ scan["url"] }}</td>
+                    <td>{{ scan["org"] }}</td>
                     <td>{{ scan["secrets"].__len__() }}</td>
                     <td>
                         <button class="button is-info" onclick="showInfo('{{ scan['url'] }}')">Info</button>
@@ -120,6 +189,28 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <!-- pagination -->
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            <form action="/secrets/user" method="post">
+                <input type="hidden" name="search" value="1">
+                <input type="hidden" name="page" value="{{ page - 1 }}">
+                <input type="hidden" name="status" value="{{ search["status"] }}">
+                <input type="hidden" name="url" value="{{ search["url"] }}">
+                <input type="hidden" name="org" value="{{ search["org"] }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <a class="pagination-previous" onclick="this.parentNode.submit()">Previous</a>
+            </form>
+            <form action="/secrets/user" method="post">
+                <input type="hidden" name="page" value="{{ page + 1 }}">
+                <input type="hidden" name="search" value="1">
+                <input type="hidden" name="status" value="{{ search["status"] }}">
+                <input type="hidden" name="url" value="{{ search["url"] }}">
+                <input type="hidden" name="org" value="{{ search["org"] }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <a class="pagination-next" onclick="this.parentNode.submit()">Next page</a>
+            </form>
+        </nav>
     </div>
 </section>
 
@@ -159,6 +250,7 @@
                                 <th>Rule ID</th>
                                 <th>Owner</th>
                                 <th>Date</th>
+                                <th>Org</th>
                             </tr>
                         </thead>
                         <tbody id="secrets-modal">
@@ -191,6 +283,7 @@
                         html += "<td>" + DOMPurify.sanitize(secrets[i]["rule_id"]) + "</td>";
                         html += "<td>" + DOMPurify.sanitize(secrets[i]["owner"]) + "</td>";
                         html += "<td>" + DOMPurify.sanitize(secrets[i]["date"]) + "</td>";
+                        html += "<td>" + DOMPurify.sanitize(secrets[i]["org"]) + "</td>";
                         html += "</tr>";
                     }
                     $("#secrets-modal").html(html);

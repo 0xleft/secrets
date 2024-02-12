@@ -15,19 +15,9 @@ def user():
         return redirect(url_for("auth.login"))
 
     user = db["users"].find_one({"id": session["id"]})
-    scan_page = request.args.get("scan_page")
-    if scan_page is None:
-        scan_page = 1
-    else:
-        try:
-            scan_page = int(scan_page)
-            if scan_page < 1:
-                scan_page = 1
-        except:
-            scan_page = 1
 
-    scans = list(db["scans"].find({"user_id": session["id"]}, limit=PER_PAGE_COUNT, skip=(scan_page-1)*PER_PAGE_COUNT).sort("date", -1))
-    return render_template("user.html", user=user, scans=scans, page=scan_page, page_end=(math.ceil(len(scans) / PER_PAGE_COUNT)))
+    scans = list(db["scans"].find({"user_id": session["id"]}).sort("date", -1))
+    return render_template("user.html", user=user, scans=scans, search={"status": "", "url": "", "org": ""}, page=1, page_end=(math.ceil(len(scans) / PER_PAGE_COUNT)))
 
 @dashboard.route('/secrets/user', methods=["POST"])
 def user_post():
@@ -39,6 +29,31 @@ def user_post():
         return redirect(url_for("auth.logout"))
     elif "reset_key" in request.form:
         db["users"].update_one({"id": session["id"]}, {"$set": {"api_key": generate_api_key()}})
+    elif "search" in request.form:
+        status = request.form.get("status")
+        page = request.form.get("page")
+        if page is None:
+            page = 1
+        else:
+            try:
+                page = int(page)
+                if page < 1:
+                    page = 1
+            except:
+                page = 1
+        url = request.form.get("url")
+        org = request.form.get("org")
+
+        query = {}
+        if status != "":
+            query["status"] = status
+        if url != "":
+            query["url"] = {"$regex": url}
+        if org != "":
+            query["org"] = {"$regex": org}
+
+        scans = list(db["scans"].find(query).sort("date", -1).limit(PER_PAGE_COUNT).skip((page-1)*PER_PAGE_COUNT))
+        return render_template("user.html", user=db["users"].find_one({"id": session["id"]}), scans=scans, search={"status": status, "url": url, "org": org}, page=page, page_end=(math.ceil(len(scans) / PER_PAGE_COUNT)))
     
     return redirect(url_for("dashboard.user"))
 
