@@ -225,13 +225,13 @@
             <div class="field">
                 <label class="label">Url</label>
                 <div class="control is-loading will-be-loading">
-                    <input class="input" readonly type="text" name="url" placeholder="Loading...">
+                    <input class="input reset-after" readonly type="text" name="url" placeholder="Loading...">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Status</label>
                 <div class="control is-loading will-be-loading">
-                    <input class="input" type="text" readonly name="status" placeholder="Loading...">
+                    <input class="input reset-after" type="text" readonly name="status" placeholder="Loading...">
                 </div>
             </div>
             <!-- table for secrets -->
@@ -296,15 +296,13 @@
             });
         }
 
-
     function resetLoading() {
         $(".will-be-loading").addClass("is-loading");
-        $("input[name='url']").val("Loading...");
-        $("input[name='status']").val("Loading...");
+        $(".reset-after").val("Loading...");
+        $(".is-loading").removeClass("is-loading");
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-
         $(".delete").click(function () {
             $(".modal").removeClass("is-active");
 
