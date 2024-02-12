@@ -164,19 +164,6 @@
                         <tbody id="secrets-modal">
                         </tbody>
                     </table>
-
-                    <div class="container">
-                        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                            <ul class="pagination-list">
-                                <li>
-                                    <a class="pagination-previous" onclick="showInfo(currentScan, page - 1)">Previous</a>
-                                </li>
-                                <li>
-                                    <a class="pagination-next" onclick="showInfo(currentScan, page + 1)">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
         </section>
@@ -184,12 +171,7 @@
 </div>
 
 <script>
-        var page = 1;
-        var currentScan = "";
-
-        function showInfo(repo, page=1) {
-            currentScan = repo;
-
+        function showInfo(repo) {
             $(".modal").addClass("is-active");
             $.ajax({
                 type: "GET",
@@ -221,8 +203,6 @@
                     alert(data);
                 }
             });
-
-            page = page;
         }
 
     document.addEventListener("DOMContentLoaded", function () {
