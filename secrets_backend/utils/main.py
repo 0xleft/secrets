@@ -7,15 +7,12 @@ db = client["secrets"]
 
 # remove duplicated
 def remove_duplicated():
-    total = 0
     secrets = list(db["secrets"].find({}))
     for secret in secrets:
         count = db["secrets"].count_documents({"url": secret["url"], "commit": secret["commit"], "path": secret["path"], "secret": secret["secret"], "match": secret["match"], "rule_id": secret["rule_id"], "owner": secret["owner"], "date": secret["date"]})
         if count > 1:
-            total += count - 1
-            for i in range(count-1):
-                db["secrets"].delete_one({"url": secret["url"], "commit": secret["commit"], "path": secret["path"], "secret": secret["secret"], "match": secret["match"], "rule_id": secret["rule_id"], "owner": secret["owner"], "date": secret["date"]})
-    print(f"Removed {total} duplicated secrets")
+            db["secrets"].delete_many({"url": secret["url"], "commit": secret["commit"], "path": secret["path"], "secret": secret["secret"], "match": secret["match"], "rule_id": secret["rule_id"], "owner": secret["owner"], "date": secret["date"]})
+            db["secrets"].insert_one(secret)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
