@@ -296,24 +296,31 @@
             });
         }
 
+
+    function resetLoading() {
+        $(".will-be-loading").addClass("is-loading");
+        $("input[name='url']").val("Loading...");
+        $("input[name='status']").val("Loading...");
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
 
         $(".delete").click(function () {
             $(".modal").removeClass("is-active");
 
-            $(".will-be-loading").addClass("is-loading");
+            resetLoading();
         });
 
         $(".modal-background").click(function () {
             $(".modal").removeClass("is-active");
 
-            $(".will-be-loading").addClass("is-loading");
+            resetLoading();
         });
 
         $(".modal-close").click(function () {
             $(".modal").removeClass("is-active");
 
-            $(".will-be-loading").addClass("is-loading");
+            resetLoading();
         });
     });
 </script>
