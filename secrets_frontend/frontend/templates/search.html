@@ -86,11 +86,7 @@
     <div class="container">
         <h2 class="title">Results</h2>
         <p class="subtitle">
-            {% if session["logged_in"] %}
-            There ya go.
-            {% else %}
-            You are not logged in. Results have been redacted.
-            {% endif %}
+            Found {{ document_count }} results. Displaying max {{ PER_PAGE_COUNT }} per page.
         </p>
 
         {% if error %}
@@ -99,7 +95,7 @@
             </div>
         {% endif %}
 
-        <table class="table is-narrow is-hoverable">
+        <table class="table is-hoverable is-fullwidth">
             <thead>
                 <tr>
                     <th>#</th>

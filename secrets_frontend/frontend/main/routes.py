@@ -17,7 +17,7 @@ def index():
 @main.route('/secrets/search', methods=['GET', 'POST'])
 def search():
     if request.method == "GET":
-        return render_template("search.html", secrets=None, result_count=0, url="", commit="", path="", secret="", match="", rule_id="", owner="", date="", page=1, page_end=0, page_start=0, PER_PAGE_COUNT=PER_PAGE_COUNT)
+        return render_template("search.html", secrets=None, result_count=0, url="", commit="", path="", secret="", match="", rule_id="", owner="", date="", page=1, page_end=0, page_start=0, PER_PAGE_COUNT=PER_PAGE_COUNT, document_count=0)
     url = request.form.get("url", "")
     commit = request.form.get("commit", "")
     path = request.form.get("path", "")
@@ -53,9 +53,10 @@ def search():
         query["date"] = {"$regex": date, "$options": "i"}
 
     page_end = min(math.ceil(db["info"].find_one()["secret_count"] / PER_PAGE_COUNT), MAX_PAGE_COUNT)
+    document_count = db["secrets"].count_documents(query if session.get("logged_in", "") != "" else {})
     results = db["secrets"].find(query if session.get("logged_in", "") != "" else {}, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
     results_count = len(list(results.clone()))
-    return render_template("search.html", secrets=enumerate(results), page=page, page_end=page_end, page_start=0, result_count=results_count, PER_PAGE_COUNT=PER_PAGE_COUNT, url=url, commit=commit, path=path, secret=secret, match=match, rule_id=rule_id, owner=owner, date=date)
+    return render_template("search.html", secrets=enumerate(results), page=page, page_end=page_end, page_start=0, result_count=results_count, PER_PAGE_COUNT=PER_PAGE_COUNT, url=url, commit=commit, path=path, secret=secret, match=match, rule_id=rule_id, owner=owner, date=date, document_count=document_count)
 
 @main.route('/secrets/docs', methods=['GET', 'POST'])
 def docs():
