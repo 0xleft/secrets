@@ -96,6 +96,7 @@ if __name__ == "__main__":
             if request_scan is not None:
                 while thread_count >= THREAD_COUNT:
                     pass
+                mongo_db["scans"].update_one({"_id": request_scan["_id"]}, {"$set": {"status": "scanning"}})
                 threading.Thread(target=thread_scan, args=(request_scan["url"], "unknown", str(request_scan["user_id"]))).start()
 
             time.sleep(0.1)
