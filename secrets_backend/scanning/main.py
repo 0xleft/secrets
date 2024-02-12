@@ -53,11 +53,11 @@ def get_repos(latest_id: int):
     return response.json()
 
 thread_count = 0
-def thread_scan(url: str, owner: str):
+def thread_scan(url: str, owner: str, requester=None):
     global thread_count
     thread_count += 1
     try:
-        scan_repo(url, owner)
+        scan_repo(url, owner, requester)
     except Exception as e:
         if VERBOSE:
             print(e)
@@ -94,6 +94,8 @@ if __name__ == "__main__":
         while True:
             request_scan = mongo_db["scans"].find_one({"status": "pending"})
             if request_scan is not None:
-                scan_repo(request_scan["url"], "unknown", str(request_scan["user_id"]))
+                while thread_count >= THREAD_COUNT:
+                    pass
+                threading.Thread(target=thread_scan, args=(request_scan["url"], "unknown", str(request_scan["user_id"]))).start()
 
             time.sleep(0.1)
