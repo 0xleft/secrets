@@ -54,7 +54,6 @@ def search():
 
     page_end = min(math.ceil(db["info"].find_one()["secret_count"] / PER_PAGE_COUNT), MAX_PAGE_COUNT)
     results = db["secrets"].find(query if session.get("logged_in", "") != "" else {}, limit=PER_PAGE_COUNT, skip=(page-1)*PER_PAGE_COUNT)
-    print(query if session.get("logged_in", "") != "" else {})
     results_count = len(list(results.clone()))
     return render_template("search.html", secrets=enumerate(results), page=page, page_end=page_end, page_start=0, result_count=results_count, PER_PAGE_COUNT=PER_PAGE_COUNT, url=url, commit=commit, path=path, secret=secret, match=match, rule_id=rule_id, owner=owner, date=date)
 
