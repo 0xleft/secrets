@@ -14,6 +14,11 @@ def remove_duplicated():
             db["secrets"].delete_many({"url": secret["url"], "commit": secret["commit"], "path": secret["path"], "secret": secret["secret"], "match": secret["match"], "rule_id": secret["rule_id"], "owner": secret["owner"], "date": secret["date"]})
             db["secrets"].insert_one(secret)
 
+def sync():
+    count = db["secrets"].count_documents({})
+    print(f"Total secrets: {count}")
+    db["info"].update_one({}, {"$set": {"secret_count": count}}, upsert=True)
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("No utils selected")
@@ -21,4 +26,8 @@ if __name__ == "__main__":
 
     if sys.argv[1] == "rmdup":
         remove_duplicated()
+        exit(0)
+
+    if sys.argv[1] == "sync":
+        sync()
         exit(0)
