@@ -222,20 +222,18 @@
         <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <fieldset disabled>
-                <div class="field">
-                    <label class="label">Url</label>
-                    <div class="control is-loading will-be-loading">
-                        <input class="input" type="text" name="url" placeholder="Loading...">
-                    </div>
+            <div class="field">
+                <label class="label">Url</label>
+                <div class="control is-loading will-be-loading">
+                    <input class="input" readonly type="text" name="url" placeholder="Loading...">
                 </div>
-                <div class="field">
-                    <label class="label">Status</label>
-                    <div class="control is-loading will-be-loading">
-                        <input class="input" type="text" name="status" placeholder="Loading...">
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label">Status</label>
+                <div class="control is-loading will-be-loading">
+                    <input class="input" type="text" readonly name="status" placeholder="Loading...">
                 </div>
-            </fieldset>
+            </div>
             <!-- table for secrets -->
             <div class="field">
                 <label class="label">Secrets</label>
