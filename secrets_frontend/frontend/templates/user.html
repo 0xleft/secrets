@@ -144,38 +144,56 @@
                         <input class="input" type="text" name="status" placeholder="Loading...">
                     </div>
                 </div>
-                <!-- table for secrets -->
-                <div class="field">
-                    <label class="label">Secrets</label>
-                    <div class="control is-loading will-be-loading">
-                        <table class="table is-narrow is-hoverable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Path</th>
-                                    <th>Secret</th>
-                                    <th>Match</th>
-                                    <th>Rule ID</th>
-                                    <th>Owner</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody id="secrets-modal">
-                            </tbody>
-                        </table>
+            </fieldset>
+            <!-- table for secrets -->
+            <div class="field">
+                <label class="label">Secrets</label>
+                <div class="control is-loading will-be-loading">
+                    <table class="table is-narrow is-hoverable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Path</th>
+                                <th>Secret</th>
+                                <th>Match</th>
+                                <th>Rule ID</th>
+                                <th>Owner</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="secrets-modal">
+                        </tbody>
+                    </table>
+
+                    <div class="container">
+                        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                            <ul class="pagination-list">
+                                <li>
+                                    <a class="pagination-previous" onclick="showInfo(currentScan, page - 1)">Previous</a>
+                                </li>
+                                <li>
+                                    <a class="pagination-next" onclick="showInfo(currentScan, page + 1)">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-            </fieldset>
+            </div>
         </section>
     </div>
 </div>
 
 <script>
-        function showInfo(repo) {
+        var page = 1;
+        var currentScan = "";
+
+        function showInfo(repo, page=1) {
+            currentScan = repo;
+
             $(".modal").addClass("is-active");
             $.ajax({
                 type: "GET",
-                url: "/secrets/api/scan/info" + "?url=" + repo,
+                url: "/secrets/api/scan/info" + "?url=" + repo + "&scan_page=" + page,
                 headers: {
                     "Authorization": "{{ user['api_key'] }}"
                 },
@@ -203,6 +221,8 @@
                     alert(data);
                 }
             });
+
+            page = page;
         }
 
     document.addEventListener("DOMContentLoaded", function () {
