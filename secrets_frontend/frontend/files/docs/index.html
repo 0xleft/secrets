@@ -754,15 +754,23 @@
             -->
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
-                  <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
-                    <li data-group="Default" data-name="getUser" class="">
-                      <a href="#api-Default-getUser">getUser</a>
+                  <li class="nav-header" data-group="General"><a href="#api-General">API Methods - General</a></li>
+                    <li data-group="General" data-name="healthCheck" class="">
+                      <a href="#api-General-healthCheck">healthCheck</a>
                     </li>
-                    <li data-group="Default" data-name="healthCheck" class="">
-                      <a href="#api-Default-healthCheck">healthCheck</a>
+                    <li data-group="General" data-name="searchSecrets" class="">
+                      <a href="#api-General-searchSecrets">searchSecrets</a>
                     </li>
-                    <li data-group="Default" data-name="searchSecrets" class="">
-                      <a href="#api-Default-searchSecrets">searchSecrets</a>
+                  <li class="nav-header" data-group="Scan"><a href="#api-Scan">API Methods - Scan</a></li>
+                    <li data-group="Scan" data-name="scanSecrets" class="">
+                      <a href="#api-Scan-scanSecrets">scanSecrets</a>
+                    </li>
+                    <li data-group="Scan" data-name="scanSecretsOrg" class="">
+                      <a href="#api-Scan-scanSecretsOrg">scanSecretsOrg</a>
+                    </li>
+                  <li class="nav-header" data-group="User"><a href="#api-User">API Methods - User</a></li>
+                    <li data-group="User" data-name="getUser" class="">
+                      <a href="#api-User-getUser">getUser</a>
                     </li>
           </ul>
         </nav>
@@ -783,346 +791,10 @@
           </div>
         </div>
         <div id="sections">
-                <section id="api-Default">
-                  <h1>Default</h1>
-                    <div id="api-Default-getUser">
-                      <article id="api-Default-getUser-0" data-group="User" data-name="getUser" data-version="0">
-                        <div class="pull-left">
-                          <h1>getUser</h1>
-                          <p>Get user details</p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/user</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-getUser-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-getUser-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-getUser-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-getUser-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-getUser-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-getUser-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-getUser-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"https://pageup.lt//secrets/api/user"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-getUser-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-        String authorization = authorization_example; // String | API key
-        try {
-            User result = apiInstance.getUser(authorization);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#getUser");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-getUser-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-        String authorization = authorization_example; // String | API key
-        try {
-            User result = apiInstance.getUser(authorization);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#getUser");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-getUser-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-getUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
-
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-// Get user details
-[apiInstance getUserWith:authorization
-              completionHandler: ^(User output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-getUser-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
-
-var api = new PageupSecretsApi.DefaultApi()
-var authorization = authorization_example; // {{String}} API key
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.getUser(authorization, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-getUser-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-getUser-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class getUserExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-            var authorization = authorization_example;  // String | API key
-
-            try
-            {
-                // Get user details
-                User result = apiInstance.getUser(authorization);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.getUser: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-getUser-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-$authorization = authorization_example; // String | API key
-
-try {
-    $result = $api_instance->getUser($authorization);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->getUser: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-getUser-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $authorization = authorization_example; # String | API key
-
-eval { 
-    my $result = $api_instance->getUser(authorization => $authorization);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->getUser: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-getUser-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-authorization = authorization_example # String | API key
-
-try: 
-    # Get user details
-    api_response = api_instance.get_user(authorization)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DefaultApi->getUser: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-                            <div class="methodsubtabletitle">Header parameters</div>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th>Description</th>
-                              </tr>
-                                  <tr><td style="width:150px;">Authorization*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_getUser_authorization">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      String
-                                                  </span>
-                                  
-                                                      <div class="inner description">
-                                                          API key
-                                                      </div>
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - user details </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-getUser-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getUser-200-schema">
-                                  <div id='responses-getUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "user details",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/User"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getUser-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getUser-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-getUser-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: 400 - bad input parameter </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                            </div>
-
-                            <h3> Status: 401 - unauthorized </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                            </div>
-
-                            <h3> Status: 403 - forbidden </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                            </div>
-
-                            <h3> Status: 404 - not found </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                            </div>
-
-                            <h3> Status: 500 - internal server error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-healthCheck">
-                      <article id="api-Default-healthCheck-0" data-group="User" data-name="healthCheck" data-version="0">
+                <section id="api-General">
+                  <h1>General</h1>
+                    <div id="api-General-healthCheck">
+                      <article id="api-General-healthCheck-0" data-group="User" data-name="healthCheck" data-version="0">
                         <div class="pull-left">
                           <h1>healthCheck</h1>
                           <p>Check the health of the API</p>
@@ -1130,7 +802,7 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">Check the health of the API, will not count against the API key usage limit</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/health</span></code></pre>
@@ -1138,74 +810,74 @@ except ApiException as e:
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-healthCheck-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-healthCheck-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-healthCheck-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-healthCheck-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-healthCheck-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-healthCheck-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-General-healthCheck-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-java">Java</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-General-healthCheck-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-General-healthCheck-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-General-healthCheck-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-General-healthCheck-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-General-healthCheck-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-healthCheck-0-curl">
+                          <div class="tab-pane active" id="examples-General-healthCheck-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 "https://pageup.lt//secrets/api/health"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-healthCheck-0-java">
+                          <div class="tab-pane" id="examples-General-healthCheck-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
+import io.swagger.client.api.GeneralApi;
 
 import java.io.File;
 import java.util.*;
 
-public class DefaultApiExample {
+public class GeneralApiExample {
 
     public static void main(String[] args) {
         
-        DefaultApi apiInstance = new DefaultApi();
+        GeneralApi apiInstance = new GeneralApi();
         String authorization = authorization_example; // String | API key
         try {
             apiInstance.healthCheck(authorization);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#healthCheck");
+            System.err.println("Exception when calling GeneralApi#healthCheck");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-healthCheck-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+                          <div class="tab-pane" id="examples-General-healthCheck-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.GeneralApi;
 
-public class DefaultApiExample {
+public class GeneralApiExample {
 
     public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
+        GeneralApi apiInstance = new GeneralApi();
         String authorization = authorization_example; // String | API key
         try {
             apiInstance.healthCheck(authorization);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#healthCheck");
+            System.err.println("Exception when calling GeneralApi#healthCheck");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-healthCheck-0-groovy">
+  <div class="tab-pane" id="examples-General-healthCheck-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-objc">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
 
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
+GeneralApi *apiInstance = [[GeneralApi alloc] init];
 
 // Check the health of the API
 [apiInstance healthCheckWith:authorization
@@ -1217,10 +889,10 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-javascript">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
 
-var api = new PageupSecretsApi.DefaultApi()
+var api = new PageupSecretsApi.GeneralApi()
 var authorization = authorization_example; // {{String}} API key
 
 var callback = function(error, data, response) {
@@ -1234,10 +906,10 @@ api.healthCheck(authorization, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-healthCheck-0-angular">
+                            <!--<div class="tab-pane" id="examples-General-healthCheck-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-csharp">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1251,7 +923,7 @@ namespace Example
         public void main()
         {
 
-            var apiInstance = new DefaultApi();
+            var apiInstance = new GeneralApi();
             var authorization = authorization_example;  // String | API key
 
             try
@@ -1261,7 +933,7 @@ namespace Example
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.healthCheck: " + e.Message );
+                Debug.Print("Exception when calling GeneralApi.healthCheck: " + e.Message );
             }
         }
     }
@@ -1269,38 +941,38 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-php">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\ApiDefaultApi();
+$api_instance = new Swagger\Client\ApiGeneralApi();
 $authorization = authorization_example; // String | API key
 
 try {
     $api_instance->healthCheck($authorization);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->healthCheck: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling GeneralApi->healthCheck: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-perl">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
+use WWW::SwaggerClient::GeneralApi;
 
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $api_instance = WWW::SwaggerClient::GeneralApi->new();
 my $authorization = authorization_example; # String | API key
 
 eval { 
     $api_instance->healthCheck(authorization => $authorization);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->healthCheck: $@\n";
+    warn "Exception when calling GeneralApi->healthCheck: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-healthCheck-0-python">
+                            <div class="tab-pane" id="examples-General-healthCheck-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1308,14 +980,14 @@ from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.DefaultApi()
+api_instance = swagger_client.GeneralApi()
 authorization = authorization_example # String | API key
 
 try: 
     # Check the health of the API
     api_instance.health_check(authorization)
 except ApiException as e:
-    print("Exception when calling DefaultApi->healthCheck: %s\n" % e)</code></pre>
+    print("Exception when calling GeneralApi->healthCheck: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1391,8 +1063,8 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-searchSecrets">
-                      <article id="api-Default-searchSecrets-0" data-group="User" data-name="searchSecrets" data-version="0">
+                    <div id="api-General-searchSecrets">
+                      <article id="api-General-searchSecrets-0" data-group="User" data-name="searchSecrets" data-version="0">
                         <div class="pull-left">
                           <h1>searchSecrets</h1>
                           <p>Search for secrets</p>
@@ -1400,7 +1072,7 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">Search for secrets matching the criteria, will count against the API key usage limit</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/search</span></code></pre>
@@ -1408,39 +1080,39 @@ except ApiException as e:
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-searchSecrets-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-searchSecrets-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-searchSecrets-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-searchSecrets-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-searchSecrets-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-searchSecrets-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-General-searchSecrets-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-java">Java</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-General-searchSecrets-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-General-searchSecrets-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-General-searchSecrets-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-General-searchSecrets-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-General-searchSecrets-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-searchSecrets-0-curl">
+                          <div class="tab-pane active" id="examples-General-searchSecrets-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
 "https://pageup.lt//secrets/api/search?url=&commit=&path=&secret=&match=&rule_id=&owner=&date=&page="</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-searchSecrets-0-java">
+                          <div class="tab-pane" id="examples-General-searchSecrets-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
+import io.swagger.client.api.GeneralApi;
 
 import java.io.File;
 import java.util.*;
 
-public class DefaultApiExample {
+public class GeneralApiExample {
 
     public static void main(String[] args) {
         
-        DefaultApi apiInstance = new DefaultApi();
+        GeneralApi apiInstance = new GeneralApi();
         String authorization = authorization_example; // String | API key
         String url = url_example; // String | url to search for
         String commit = commit_example; // String | commit to search for
@@ -1455,20 +1127,20 @@ public class DefaultApiExample {
             array[Secret] result = apiInstance.searchSecrets(authorization, url, commit, path, secret, match, ruleId, owner, date, page);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#searchSecrets");
+            System.err.println("Exception when calling GeneralApi#searchSecrets");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-searchSecrets-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+                          <div class="tab-pane" id="examples-General-searchSecrets-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.GeneralApi;
 
-public class DefaultApiExample {
+public class GeneralApiExample {
 
     public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
+        GeneralApi apiInstance = new GeneralApi();
         String authorization = authorization_example; // String | API key
         String url = url_example; // String | url to search for
         String commit = commit_example; // String | commit to search for
@@ -1483,17 +1155,17 @@ public class DefaultApiExample {
             array[Secret] result = apiInstance.searchSecrets(authorization, url, commit, path, secret, match, ruleId, owner, date, page);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#searchSecrets");
+            System.err.println("Exception when calling GeneralApi#searchSecrets");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-searchSecrets-0-groovy">
+  <div class="tab-pane" id="examples-General-searchSecrets-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-objc">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
 String *url = url_example; // url to search for (optional)
 String *commit = commit_example; // commit to search for (optional)
@@ -1505,7 +1177,7 @@ String *owner = owner_example; // owner to search for (optional)
 String *date = date_example; // date to search for (optional)
 Integer *page = 56; // page number (optional)
 
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
+GeneralApi *apiInstance = [[GeneralApi alloc] init];
 
 // Search for secrets
 [apiInstance searchSecretsWith:authorization
@@ -1529,10 +1201,10 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-javascript">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
 
-var api = new PageupSecretsApi.DefaultApi()
+var api = new PageupSecretsApi.GeneralApi()
 var authorization = authorization_example; // {{String}} API key
 var opts = { 
   'url': url_example, // {{String}} url to search for
@@ -1556,10 +1228,10 @@ api.searchSecrets(authorization, opts, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-searchSecrets-0-angular">
+                            <!--<div class="tab-pane" id="examples-General-searchSecrets-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-csharp">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1573,7 +1245,7 @@ namespace Example
         public void main()
         {
 
-            var apiInstance = new DefaultApi();
+            var apiInstance = new GeneralApi();
             var authorization = authorization_example;  // String | API key
             var url = url_example;  // String | url to search for (optional) 
             var commit = commit_example;  // String | commit to search for (optional) 
@@ -1593,7 +1265,7 @@ namespace Example
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.searchSecrets: " + e.Message );
+                Debug.Print("Exception when calling GeneralApi.searchSecrets: " + e.Message );
             }
         }
     }
@@ -1601,11 +1273,11 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-php">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\ApiDefaultApi();
+$api_instance = new Swagger\Client\ApiGeneralApi();
 $authorization = authorization_example; // String | API key
 $url = url_example; // String | url to search for
 $commit = commit_example; // String | commit to search for
@@ -1621,17 +1293,17 @@ try {
     $result = $api_instance->searchSecrets($authorization, $url, $commit, $path, $secret, $match, $ruleId, $owner, $date, $page);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->searchSecrets: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling GeneralApi->searchSecrets: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-perl">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
+use WWW::SwaggerClient::GeneralApi;
 
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $api_instance = WWW::SwaggerClient::GeneralApi->new();
 my $authorization = authorization_example; # String | API key
 my $url = url_example; # String | url to search for
 my $commit = commit_example; # String | commit to search for
@@ -1648,11 +1320,11 @@ eval {
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->searchSecrets: $@\n";
+    warn "Exception when calling GeneralApi->searchSecrets: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-searchSecrets-0-python">
+                            <div class="tab-pane" id="examples-General-searchSecrets-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1660,7 +1332,7 @@ from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.DefaultApi()
+api_instance = swagger_client.GeneralApi()
 authorization = authorization_example # String | API key
 url = url_example # String | url to search for (optional)
 commit = commit_example # String | commit to search for (optional)
@@ -1677,7 +1349,7 @@ try:
     api_response = api_instance.search_secrets(authorization, url=url, commit=commit, path=path, secret=secret, match=match, ruleId=ruleId, owner=owner, date=date, page=page)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->searchSecrets: %s\n" % e)</code></pre>
+    print("Exception when calling GeneralApi->searchSecrets: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1945,6 +1617,1104 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-searchSecrets-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - bad input parameter </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 401 - unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 403 - forbidden </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 404 - not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 500 - internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Scan">
+                  <h1>Scan</h1>
+                    <div id="api-Scan-scanSecrets">
+                      <article id="api-Scan-scanSecrets-0" data-group="User" data-name="scanSecrets" data-version="0">
+                        <div class="pull-left">
+                          <h1>scanSecrets</h1>
+                          <p>Scan for secrets</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Scan for secrets in the repository, will count against the API key usage limit</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/scan</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Scan-scanSecrets-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Scan-scanSecrets-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Scan-scanSecrets-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecrets-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Scan-scanSecrets-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://pageup.lt//secrets/api/scan?url="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Scan-scanSecrets-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ScanApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ScanApiExample {
+
+    public static void main(String[] args) {
+        
+        ScanApi apiInstance = new ScanApi();
+        String authorization = authorization_example; // String | API key
+        String url = url_example; // String | url to scan
+        try {
+            array[Secret] result = apiInstance.scanSecrets(authorization, url);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanSecrets");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Scan-scanSecrets-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ScanApi;
+
+public class ScanApiExample {
+
+    public static void main(String[] args) {
+        ScanApi apiInstance = new ScanApi();
+        String authorization = authorization_example; // String | API key
+        String url = url_example; // String | url to scan
+        try {
+            array[Secret] result = apiInstance.scanSecrets(authorization, url);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanSecrets");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Scan-scanSecrets-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
+String *url = url_example; // url to scan
+
+ScanApi *apiInstance = [[ScanApi alloc] init];
+
+// Scan for secrets
+[apiInstance scanSecretsWith:authorization
+    url:url
+              completionHandler: ^(array[Secret] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
+
+var api = new PageupSecretsApi.ScanApi()
+var authorization = authorization_example; // {{String}} API key
+var url = url_example; // {{String}} url to scan
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.scanSecrets(authorization, url, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Scan-scanSecrets-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class scanSecretsExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new ScanApi();
+            var authorization = authorization_example;  // String | API key
+            var url = url_example;  // String | url to scan
+
+            try
+            {
+                // Scan for secrets
+                array[Secret] result = apiInstance.scanSecrets(authorization, url);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ScanApi.scanSecrets: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiScanApi();
+$authorization = authorization_example; // String | API key
+$url = url_example; // String | url to scan
+
+try {
+    $result = $api_instance->scanSecrets($authorization, $url);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ScanApi->scanSecrets: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ScanApi;
+
+my $api_instance = WWW::SwaggerClient::ScanApi->new();
+my $authorization = authorization_example; # String | API key
+my $url = url_example; # String | url to scan
+
+eval { 
+    my $result = $api_instance->scanSecrets(authorization => $authorization, url => $url);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ScanApi->scanSecrets: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecrets-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.ScanApi()
+authorization = authorization_example # String | API key
+url = url_example # String | url to scan
+
+try: 
+    # Scan for secrets
+    api_response = api_instance.scan_secrets(authorization, url)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ScanApi->scanSecrets: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">Authorization*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_scanSecrets_authorization">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          API key
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">url*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_scanSecrets_url">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        url to scan
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - scan results </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-scanSecrets-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-scanSecrets-200-schema">
+                                  <div id='responses-scanSecrets-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "scan results",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Secret"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-scanSecrets-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-scanSecrets-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-scanSecrets-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - bad input parameter </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 401 - unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 403 - forbidden </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 404 - not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 500 - internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Scan-scanSecretsOrg">
+                      <article id="api-Scan-scanSecretsOrg-0" data-group="User" data-name="scanSecretsOrg" data-version="0">
+                        <div class="pull-left">
+                          <h1>scanSecretsOrg</h1>
+                          <p>Scan for secrets in the organization</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Scan for secrets in the organization, will count against the API key usage limit. It will count as many times as there are repositories in the organization.</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/scan_org</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Scan-scanSecretsOrg-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Scan-scanSecretsOrg-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Scan-scanSecretsOrg-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Scan-scanSecretsOrg-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Scan-scanSecretsOrg-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://pageup.lt//secrets/api/scan_org?org="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ScanApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ScanApiExample {
+
+    public static void main(String[] args) {
+        
+        ScanApi apiInstance = new ScanApi();
+        String authorization = authorization_example; // String | API key
+        String org = org_example; // String | organization to scan
+        try {
+            array[Secret] result = apiInstance.scanSecretsOrg(authorization, org);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanSecretsOrg");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ScanApi;
+
+public class ScanApiExample {
+
+    public static void main(String[] args) {
+        ScanApi apiInstance = new ScanApi();
+        String authorization = authorization_example; // String | API key
+        String org = org_example; // String | organization to scan
+        try {
+            array[Secret] result = apiInstance.scanSecretsOrg(authorization, org);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanSecretsOrg");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
+String *org = org_example; // organization to scan
+
+ScanApi *apiInstance = [[ScanApi alloc] init];
+
+// Scan for secrets in the organization
+[apiInstance scanSecretsOrgWith:authorization
+    org:org
+              completionHandler: ^(array[Secret] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
+
+var api = new PageupSecretsApi.ScanApi()
+var authorization = authorization_example; // {{String}} API key
+var org = org_example; // {{String}} organization to scan
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.scanSecretsOrg(authorization, org, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class scanSecretsOrgExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new ScanApi();
+            var authorization = authorization_example;  // String | API key
+            var org = org_example;  // String | organization to scan
+
+            try
+            {
+                // Scan for secrets in the organization
+                array[Secret] result = apiInstance.scanSecretsOrg(authorization, org);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ScanApi.scanSecretsOrg: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiScanApi();
+$authorization = authorization_example; // String | API key
+$org = org_example; // String | organization to scan
+
+try {
+    $result = $api_instance->scanSecretsOrg($authorization, $org);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ScanApi->scanSecretsOrg: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ScanApi;
+
+my $api_instance = WWW::SwaggerClient::ScanApi->new();
+my $authorization = authorization_example; # String | API key
+my $org = org_example; # String | organization to scan
+
+eval { 
+    my $result = $api_instance->scanSecretsOrg(authorization => $authorization, org => $org);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ScanApi->scanSecretsOrg: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Scan-scanSecretsOrg-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.ScanApi()
+authorization = authorization_example # String | API key
+org = org_example # String | organization to scan
+
+try: 
+    # Scan for secrets in the organization
+    api_response = api_instance.scan_secrets_org(authorization, org)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ScanApi->scanSecretsOrg: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">Authorization*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_scanSecretsOrg_authorization">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          API key
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">org*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_scanSecretsOrg_org">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        organization to scan
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - scan results </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-scanSecretsOrg-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-scanSecretsOrg-200-schema">
+                                  <div id='responses-scanSecretsOrg-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "scan results",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Secret"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-scanSecretsOrg-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-scanSecretsOrg-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-scanSecretsOrg-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - bad input parameter </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 401 - unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 403 - forbidden </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 404 - not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 500 - internal server error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-User">
+                  <h1>User</h1>
+                    <div id="api-User-getUser">
+                      <article id="api-User-getUser-0" data-group="User" data-name="getUser" data-version="0">
+                        <div class="pull-left">
+                          <h1>getUser</h1>
+                          <p>Get user details</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Get details of the user associated with the API key, will not count against the API key usage limit</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/secrets/api/user</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-User-getUser-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-java">Java</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-User-getUser-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-User-getUser-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-User-getUser-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-User-getUser-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-User-getUser-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-User-getUser-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://pageup.lt//secrets/api/user"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-User-getUser-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UserApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        
+        UserApi apiInstance = new UserApi();
+        String authorization = authorization_example; // String | API key
+        try {
+            User result = apiInstance.getUser(authorization);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#getUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-User-getUser-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UserApi;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        UserApi apiInstance = new UserApi();
+        String authorization = authorization_example; // String | API key
+        try {
+            User result = apiInstance.getUser(authorization);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#getUser");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-User-getUser-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-User-getUser-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *authorization = authorization_example; // API key
+
+UserApi *apiInstance = [[UserApi alloc] init];
+
+// Get user details
+[apiInstance getUserWith:authorization
+              completionHandler: ^(User output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-getUser-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PageupSecretsApi = require('pageup_secrets_api');
+
+var api = new PageupSecretsApi.UserApi()
+var authorization = authorization_example; // {{String}} API key
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getUser(authorization, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-User-getUser-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-User-getUser-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getUserExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new UserApi();
+            var authorization = authorization_example;  // String | API key
+
+            try
+            {
+                // Get user details
+                User result = apiInstance.getUser(authorization);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UserApi.getUser: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-getUser-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiUserApi();
+$authorization = authorization_example; // String | API key
+
+try {
+    $result = $api_instance->getUser($authorization);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UserApi->getUser: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-getUser-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UserApi;
+
+my $api_instance = WWW::SwaggerClient::UserApi->new();
+my $authorization = authorization_example; # String | API key
+
+eval { 
+    my $result = $api_instance->getUser(authorization => $authorization);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UserApi->getUser: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-getUser-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.UserApi()
+authorization = authorization_example # String | API key
+
+try: 
+    # Get user details
+    api_response = api_instance.get_user(authorization)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UserApi->getUser: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">Authorization*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getUser_authorization">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          API key
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - user details </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getUser-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getUser-200-schema">
+                                  <div id='responses-getUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "user details",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/User"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getUser-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getUser-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getUser-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
