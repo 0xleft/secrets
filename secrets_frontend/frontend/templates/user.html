@@ -234,6 +234,12 @@
                     <input class="input reset-after status-type" type="text" readonly name="status" placeholder="Loading...">
                 </div>
             </div>
+            <div class="field">
+                <label class="label">Org</label>
+                <div class="control is-loading will-be-loading">
+                    <input class="input reset-after org-type" type="text" readonly name="status" placeholder="Loading...">
+                </div>
+            </div>
             <!-- table for secrets -->
             <div class="field">
                 <label class="label">Secrets</label>
@@ -287,7 +293,7 @@
                     $("#secrets-modal").html(html);
                     $(".url-type").val(repo);
                     $(".status-type").val(data["status"]);
-
+                    $(".org-type").val(data["org"]);
                     $(".is-loading").removeClass("is-loading");
                 },
                 error: function (data) {
