@@ -225,13 +225,13 @@
             <div class="field">
                 <label class="label">Url</label>
                 <div class="control is-loading will-be-loading">
-                    <input class="input reset-after" readonly type="text" name="url" placeholder="Loading...">
+                    <input class="input reset-after url-type" readonly type="text" name="url" placeholder="Loading...">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Status</label>
                 <div class="control is-loading will-be-loading">
-                    <input class="input reset-after" type="text" readonly name="status" placeholder="Loading...">
+                    <input class="input reset-after status-type" type="text" readonly name="status" placeholder="Loading...">
                 </div>
             </div>
             <!-- table for secrets -->
@@ -285,8 +285,8 @@
                         html += "</tr>";
                     }
                     $("#secrets-modal").html(html);
-                    $("input[name='url']").val(repo);
-                    $("input[name='status']").val(data["status"]);
+                    $(".url-type").val(repo);
+                    $(".status-type").val(data["status"]);
 
                     $(".is-loading").removeClass("is-loading");
                 },
