@@ -15,8 +15,17 @@ def scan_gitleaks(repo: Repo, url: str, owner: str, requester):
     if not is_safe(repo.working_dir):
         raise Exception(f"Invalid directory name {repo.working_dir}!")
 
-    subprocess.run([GITLEAKS_BIN, "detect", "-s", repo.working_dir, "--exit-code", "0", "--no-banner", "--no-color", "--report-format", "json", "--log-level", "error", "--report-path", f"{repo.working_dir}_gitleaks.json", "--max-target-megabytes", "1"], stderr=subprocess.DEVNULL, check=True)
-
+    try:
+        subprocess.check_output([GITLEAKS_BIN, "detect", "-s", repo.working_dir, "--exit-code", "0", "--no-banner", "--no-color", "--report-format", "json", "--log-level", "error", "--report-path", f"{repo.working_dir}_gitleaks.json", "--max-target-megabytes", "1"], stderr=subprocess.DEVNULL, timeout=60*2)
+    except subprocess.CalledProcessError as e:
+        if VERBOSE:
+            print(e)
+    except subprocess.TimeoutExpired:
+        if VERBOSE:
+            print(f"Gitleaks took too long to scan {url}")
+        if requester is not None:
+            storage.mongo_db["scans"].update_one({"url": url, "user_id": int(requester)}, {"$set": {"status": "took too long"}})
+        return
     try:
         with open(f"{repo.working_dir}_gitleaks.json", "r") as f:
             storage.store(f.read(), url, owner, requester)
