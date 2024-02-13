@@ -162,6 +162,7 @@ def api_scan_status():
 		return jsonify({"status": scan["status"]}), 200
 	return jsonify({
 		"status": scan["status"],
+		"org": scan["org"],
 		"secrets": [{
 			"commit": secret["commit"],
 			"path": secret["path"],
