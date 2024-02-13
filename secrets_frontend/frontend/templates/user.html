@@ -263,6 +263,14 @@
                 </div>
             </div>
         </section>
+        <footer class="modal-card-foot">
+            <form action="/secrets/user" method="post">
+                <input type="hidden" name="url" class="url-type">
+                <input type="hidden" name="delete_scan" value="1">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button is-danger">Delete</button>
+            </form>
+        </footer>
     </div>
 </div>
 

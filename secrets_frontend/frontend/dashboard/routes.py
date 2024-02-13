@@ -29,6 +29,9 @@ def user_post():
         return redirect(url_for("auth.logout"))
     elif "reset_key" in request.form:
         db["users"].update_one({"id": session["id"]}, {"$set": {"api_key": generate_api_key()}})
+    elif "delete_scan" in request.form:
+        url = request.form.get("url")
+        db["scans"].delete_one({"url": url, "user_id": session["id"]})
     elif "search" in request.form:
         status = request.form.get("status")
         page = request.form.get("page")
