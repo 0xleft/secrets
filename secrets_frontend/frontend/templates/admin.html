@@ -74,6 +74,7 @@
                     <th>Api key uses left</th>
                     <th>Is deleted</th>
                     <td>Is Admin</td>
+                    <td>Last IP</td>
                 </tr>
             </thead>
             <tbody>
@@ -87,6 +88,7 @@
                         <td>{{ user["api_key_uses_left"] }}</td>
                         <td>{{ user["is_deleted"] }}</td>
                         <td>{{ user["is_admin"] }}</td>
+                        <td>{{ user["last_ip"] }}</td>
                         <td>
                             <button class="js-modal-trigger button is-primary" data-target="modal-js">
                                 Edit
