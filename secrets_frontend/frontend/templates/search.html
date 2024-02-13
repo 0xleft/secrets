@@ -150,8 +150,8 @@
                     <td>{{ secret.url if session["logged_in"] else secret.url[:19] + "redacted" }}</td>
                     <td>{{ secret.commit if session["logged_in"] else secret.commit[:10] + "..." }}</td>
                     <td>{{ secret.path if session["logged_in"] else secret.path[:10] }}</td>
-                    <td>{{ secret.secret if session["logged_in"] else "redacted" }}</td>
-                    <td>{{ secret.match if session["logged_in"] else "redacted" }}</td>
+                    <td>{{ "redacted" if session["logged_in"] else "redacted" }}</td>
+                    <td>{{ "redacted" if session["logged_in"] else "redacted" }}</td>
                     <td>{{ secret.rule_id if session["logged_in"] else secret.rule_id[:19] }}</td>
                     <td>{{ secret.owner if session["logged_in"] else "redacted" }}</td>
                     <td>{{ secret.date }}</td>
